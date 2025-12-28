@@ -1,6 +1,7 @@
 {{ define "user/dashboard.html" }}
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,227 +12,556 @@
 
     <style>
         :root {
-            /* Samakan style dengan Dashboard */
             --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            --bg-body: #f8fafc;
+            --secondary-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --bg-body: #ebf4ff;
+            /* More distinct blue-ish background */
             --bg-surface: #ffffff;
             --secondary-text: #64748b;
             --primary-color: #2563eb;
-
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --radius-lg: 1rem;
-            --radius-md: 0.75rem;
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --radius-lg: 1.5rem;
+            --radius-md: 1rem;
         }
 
         body {
             background-color: var(--bg-body);
             font-family: 'Inter', sans-serif;
-            color: #334155;
-            min-height: 100vh;
+            color: #1e293b;
         }
 
-        /* Navbar Style */
+        /* Premium Top Navbar */
         .navbar {
-            background: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-sm);
-            padding-top: 1rem; padding-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.85rem 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
         }
+
         .navbar-brand {
-            font-weight: 700; font-size: 1.35rem;
+            font-weight: 900;
+            font-size: 1.6rem;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon-box {
+            width: 40px;
+            height: 40px;
             background: var(--primary-gradient);
-            background-clip: text;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover .brand-icon-box {
+            transform: rotate(-10deg) scale(1.1);
+        }
+
+        .brand-text {
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .nav-link {
-            color: var(--secondary-text) !important; font-weight: 600;
-            padding: 0.5rem 1rem !important; border-radius: 0.5rem; transition: all 0.2s;
+            font-weight: 600;
+            color: #475569 !important;
+            padding: 0.7rem 1.4rem !important;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            margin: 0 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .nav-link:hover, .nav-link.active {
+
+        .nav-link:hover {
             color: var(--primary-color) !important;
-            background: rgba(37, 99, 235, 0.05);
-        }
-        .btn-outline-danger { border: 2px solid #e2e8f0 !important; }
-        .btn-outline-danger:hover { border-color: #ef4444 !important; color: #ef4444 !important; background: #fef2f2 !important; }
-        
-        /* Header Area */
-        .header-section {
-            background: var(--primary-gradient);
-            color: white; padding: 3rem 0 5rem;
-            margin-bottom: 0; position: relative; overflow: hidden;
-        }
-        .header-section::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background-image: radial-gradient(circle at 20% 150%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 50%);
-            pointer-events: none;
+            background: rgba(37, 99, 235, 0.06);
+            transform: translateY(-1px);
         }
 
-        .main-container { margin-top: -3rem; position: relative; z-index: 10; }
-
-        /* Search Card Style */
-        .search-card {
-            background: var(--bg-surface);
+        .dropdown-menu-notif {
+            width: 420px !important;
             border: none;
-            border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            border-radius: 20px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .dropdown-menu-profile {
+            min-width: 180px !important;
+            width: auto !important;
+            border: none;
+            box-shadow: var(--shadow-lg);
+            border-radius: 16px;
+            padding: 8px;
+        }
+
+        /* Logout Button Fix */
+        .dropdown-item.text-danger:active,
+        .dropdown-item.text-danger:focus {
+            background-color: #fee2e2 !important;
+            color: #dc2626 !important;
+        }
+
+        .nav-link.active {
+            color: white !important;
+            background: var(--primary-gradient);
+            box-shadow: 0 8px 15px rgba(37, 99, 235, 0.2);
+        }
+
+        .nav-profile {
+            background: white;
+            padding: 6px 16px 6px 6px;
+            border-radius: 50px;
+            border: 1px solid #f1f5f9;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+
+        .nav-profile:hover {
+            box-shadow: var(--shadow-md);
+            border-color: #e2e8f0;
+            transform: translateY(-1px);
+        }
+
+        /* Premium Sidebar */
+        /* .sidebar {
+            height: 100vh;
+            width: 260px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 20px 15px;
+            z-index: 1000;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 10px 15px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 25px;
+        }
+
+        .sidebar-brand {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #3b82f6;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar .nav-link {
+            color: #94a3b8;
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid transparent;
+            text-decoration: none;
+        }
+
+        .sidebar .nav-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            transform: translateX(5px);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-link.active {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            font-weight: 600;
+            border: none;
+        }
+
+        .sidebar .nav-link i {
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .sidebar .profile-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        } */
+
+        /* .main-content {
+            margin-left: 260px;
+            min-height: 100vh;
+            padding: 0;
+        } */
+
+        /* @media (max-width: 991.98px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar-toggler {
+                display: block;
+            }
+        } */
+
+        /* .sidebar-toggler {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1100;
+            background: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+        } */
+
+        /* .sidebar .nav-link.text-danger {
+            margin-top: auto;
+            color: #fca5a5 !important;
+        }
+
+        .sidebar .nav-link.text-danger:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171 !important;
+            border-color: rgba(239, 68, 68, 0.2);
+        } */
+
+        /* Premium Header */
+        .header-section {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            position: relative;
+            padding: 5rem 0 7rem;
+            color: white;
+            overflow: hidden;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 40%);
+        }
+
+        .header-section h2 {
+            font-weight: 800;
+            letter-spacing: -1px;
+            font-size: 2.5rem;
+        }
+
+        /* Premium Search Card */
+        .main-container {
+            margin-top: -4rem;
+            position: relative;
+            z-index: 100;
+            padding-bottom: 5rem;
+        }
+
+        .search-card {
+            background: white;
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .search-card .form-control,
         .search-card .form-select {
-            border: 2px solid #e2e8f0;
-            border-radius: var(--radius-md);
-            padding: 0.75rem 1rem;
-            font-size: 0.95rem;
+            border: 2px solid #f1f5f9;
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 0.8rem 1.25rem;
+            height: auto;
+            font-weight: 500;
             transition: all 0.2s;
         }
 
         .search-card .form-control:focus,
         .search-card .form-select:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            border-color: #3b82f6;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            outline: none;
         }
 
-        .search-card .input-group-text {
-            background: transparent;
-            border: 2px solid #e2e8f0;
-            border-right: none;
-            color: var(--secondary-text);
+        /* Improved Dropdown Styling */
+        .search-card .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 16px 12px;
         }
 
-        .search-card .form-control {
-            border-left: none;
-        }
-
-        .search-card label {
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        /* Notifikasi Dropdown */
-        .dropdown-menu-notif {
-            width: 320px;
-            border: none;
-            box-shadow: var(--shadow-lg);
-            max-height: 400px;
-            overflow-y: auto;
-            border-radius: var(--radius-lg);
-        }
-        .notif-item {
-            white-space: normal;
-            padding: 10px 15px;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 0.9rem;
-        }
-        .notif-item:hover { background-color: #f8fafc; }
-        .notif-unread { font-weight: bold; color: #1e293b; }
-        .notif-read { color: var(--secondary-text); }
-
-        /* Card Barang */
+        /* Premium Item Card */
         .item-card {
             border: none;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
-            transition: transform 0.2s;
-            background: var(--bg-surface);
+            border-radius: 20px;
+            background: white;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             height: 100%;
         }
-        .item-card:hover { transform: translateY(-5px); }
+
+        .item-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        }
+
         .card-img-top-wrapper {
-            height: 140px;
-            background: #eff6ff;
+            height: 180px;
+            background: #f8fafc;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            transition: all 0.4s ease;
         }
-        .card-img-top-wrapper i { font-size: 3rem; color: #3b82f6; }
 
+        .item-card:hover .card-img-top-wrapper {
+            background: #eff6ff;
+        }
+
+        .card-img-top-wrapper i {
+            font-size: 4rem;
+            color: #3b82f6;
+            transition: all 0.4s ease;
+        }
+
+        .item-card:hover .card-img-top-wrapper i {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .card-body-custom {
+            padding: 1.5rem;
+        }
+
+        .item-title {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-stock {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Buttons & Badges */
         .btn-pinjam {
             background: var(--primary-gradient);
+            color: white !important;
             border: none;
-            color: white;
-            font-weight: 500;
-            border-radius: var(--radius-md);
+            padding: 0.75rem 1.5rem;
+            border-radius: 14px;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .btn-pinjam:hover { background: #1d4ed8; color: white; }
+
+        .btn-pinjam:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+            opacity: 0.9;
+        }
+
+        /* Logout Button */
+        /* .btn-logout {
+            color: #ef4444 !important;
+            font-weight: 700;
+            border: 1.5px solid #fee2e2;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: #fef2f2 !important;
+            color: #b91c1c !important;
+            border-color: #ef4444;
+            transform: scale(1.05);
+        } */
+
+        /* Spacing */
+        .section-title {
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Fix jumpy transitions */
+        .item-card {
+            backface-visibility: hidden;
+            -webkit-font-smoothing: subpixel-antialiased;
+        }
+
+        .form-control[type="file"]::file-selector-button {
+            background: #f1f5f9 !important;
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 5px 15px !important;
+            margin-right: 10px !important;
+            font-weight: 600 !important;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
+
 <body>
 
+    <!-- Premium Top Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-shapes me-2"></i>Aset Kampus
+            <a class="navbar-brand" href="/user/dashboard">
+                <div class="brand-icon-box">
+                    <i class="fas fa-shapes"></i>
+                </div>
+                <span class="brand-text">Aset Kampus</span>
             </a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <i class="fas fa-bars-staggered text-primary"></i>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
                         <a class="nav-link active" href="/user/dashboard">
-                            <i class="fas fa-layer-group me-1"></i>Daftar Barang
+                            <i class="fas fa-layer-group"></i> Daftar Barang
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/user/history">
-                            <i class="fas fa-clock-rotate-left me-1"></i>Riwayat
+                            <i class="fas fa-clock-rotate-left"></i> Riwayat
                         </a>
                     </li>
-                    <li class="nav-item dropdown ms-lg-3">
-                        <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-bell fa-lg"></i>
 
-                            {{ if .UnreadCount }}
-                                {{ if gt .UnreadCount 0 }}
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ .UnreadCount }}
-                                </span>
-                                {{ end }}
+                    <li class="nav-item dropdown px-lg-2">
+                        <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell"></i>
+                            {{ if gt .UnreadCount 0 }}
+                            <span
+                                class="position-absolute top-2 start-100 translate-middle badge rounded-circle bg-danger border border-2 border-white"
+                                style="padding: 4px; min-width: 10px; height: 10px;">
+                                <span class="visually-hidden">unread</span>
+                            </span>
                             {{ end }}
                         </a>
-
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-notif">
-                            <li class="p-2 border-bottom fw-bold text-center bg-light">Notifikasi</li>
-
-                            {{ range .Notifs }}
-                            <li>
-                                <a class="dropdown-item notif-item" href="#">
-                                    <div class="d-flex align-items-start">
-                                        <div class="me-2 mt-1">
-                                            {{ if .IsRead }}
-                                            <i class="fas fa-envelope-open text-muted"></i>
-                                            {{ else }}
-                                            <i class="fas fa-envelope text-primary"></i>
-                                            {{ end }}
-                                        </div>
-                                        <div>
-                                            <div class="{{ if not .IsRead }}notif-unread{{ else }}notif-read{{ end }}">
-                                                {{ .Message }}
-                                            </div>
-                                            <small class="text-muted" style="font-size: 0.75rem;">
-                                                {{ .CreatedAt.Format "02 Jan 15:04" }}
-                                            </small>
-                                        </div>
-                                    </div>
-                                </a>
+                        <ul
+                            class="dropdown-menu dropdown-menu-end dropdown-menu-notif border-0 shadow-lg p-2 rounded-4 mt-3">
+                            <li class="p-3 border-bottom d-flex justify-content-between align-items-center">
+                                <span class="fw-bold">Notifikasi</span>
+                                <span class="badge bg-primary-subtle text-primary rounded-pill">{{ .UnreadCount }}
+                                    Baru</span>
                             </li>
-                            {{ else }}
-                            <li class="p-4 text-center text-muted small">Tidak ada notifikasi baru.</li>
-                            {{ end }}
+                            <div style="max-height: 400px; overflow-y: auto;">
+                                {{ range .Notifs }}
+                                <li>
+                                    <a class="dropdown-item p-3 rounded-3 mb-1 {{ if not .IsRead }}bg-primary-subtle bg-opacity-10 border-start border-primary border-4{{ end }}"
+                                        href="javascript:void(0)" onclick="markAsRead('{{ .ID }}', this)"
+                                        style="white-space: normal;">
+                                        <div class="d-flex align-items-start gap-3">
+                                            <div
+                                                class="notif-icon-wrapper {{ if .IsRead }}text-muted{{ else }}text-primary{{ end }}">
+                                                <i
+                                                    class="fas {{ if .IsRead }}fa-envelope-open{{ else }}fa-envelope{{ end }} mt-1"></i>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <div class="small {{ if not .IsRead }}fw-bold text-dark{{ else }}text-muted{{ end }}"
+                                                    style="line-height: 1.5;">
+                                                    {{ .Message }}
+                                                </div>
+                                                <div class="smaller text-muted mt-1" style="font-size: 0.7rem;">
+                                                    <i class="far fa-clock me-1"></i>{{ .CreatedAt.Format "02 Jan 15:04"
+                                                    }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                {{ else }}
+                                <li class="p-4 text-center text-muted">
+                                    <i class="fas fa-bell-slash d-block mb-2 opacity-25 fa-2x"></i>
+                                    <span class="small">Tidak ada notifikasi baru</span>
+                                </li>
+                                {{ end }}
+                            </div>
                         </ul>
                     </li>
 
                     <li class="nav-item ms-lg-3">
-                        <a class="nav-link btn-outline-danger px-3" href="/logout">
-                            <i class="fas fa-arrow-right-from-bracket me-1"></i>Logout
-                        </a>
+                        <div class="dropdown">
+                            <a href="#"
+                                class="nav-profile d-flex align-items-center text-decoration-none dropdown-toggle border-0 shadow-none"
+                                data-bs-toggle="dropdown">
+                                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2"
+                                    style="width: 32px; height: 32px;">
+                                    <span class="fw-bold text-white small">{{ slice .UserName 0 1 }}</span>
+                                </div>
+                                <span class="small fw-bold text-muted d-none d-sm-inline">{{ .UserName }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-profile border-0 shadow-lg mt-3">
+                                <li>
+                                    <a class="dropdown-item rounded-3 text-danger fw-bold" href="/logout">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -246,6 +576,31 @@
     </div>
 
     <div class="container main-container pb-5">
+        <!-- BARU: Alert Blokir (Hanya jika telat parah) -->
+        {{ if .IsBlocked }}
+        <div class="alert alert-danger border-0 shadow-sm d-flex align-items-center mb-4 p-3"
+            style="border-radius: var(--radius-lg);">
+            <i class="fas fa-lock fs-4 me-3"></i>
+            <div>
+                <h6 class="fw-bold mb-1">Akses Pinjam Terkunci</h6>
+                <p class="mb-0 small opacity-90">{{ .BlockReason }}</p>
+            </div>
+        </div>
+        {{ end }}
+
+        <!-- BARU: Alert Kuning (Peringatan Denda/Telat Ringan - TETAP BISA PINJAM) -->
+        {{ if and (not .IsBlocked) .HasUnpaidFine }}
+        <div class="alert alert-warning border-0 shadow-sm d-flex align-items-center mb-4 p-3"
+            style="border-color: #fef3c7 !important; background: #fffbeb; border-radius: var(--radius-lg);">
+            <i class="fas fa-info-circle fs-4 me-3 text-warning"></i>
+            <div>
+                <h6 class="fw-bold mb-1 text-dark">Informasi Tagihan</h6>
+                <p class="mb-0 small text-muted">Anda memiliki denda yang belum dilunasi. Anda masih bisa meminjam,
+                    namun mohon segera diselesaikan ya!</p>
+            </div>
+        </div>
+        {{ end }}
+
         <!-- Search Card -->
         <div class="search-card">
             <div class="row g-3">
@@ -257,7 +612,8 @@
                         <span class="input-group-text">
                             <i class="fas fa-search"></i>
                         </span>
-                        <input type="text" id="searchInput" class="form-control" placeholder="Cari barang (Laptop, Proyektor...)" onkeyup="searchItems()">
+                        <input type="text" id="searchInput" class="form-control"
+                            placeholder="Cari barang (Laptop, Proyektor...)" onkeyup="searchItems()">
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -274,8 +630,8 @@
             </div>
         </div>
 
-        <h5 class="fw-bold mb-3"><i class="fas fa-box-open me-2 text-primary"></i>Barang Tersedia</h5>
-        
+        <h5 class="fw-bold section-title"><i class="fas fa-box-open me-2 text-primary"></i>Barang Tersedia</h5>
+
         <div class="row g-4" id="itemsContainer">
             {{ range .Items }}
             <div class="col-6 col-md-3 item-element" data-name="{{ .Name }}">
@@ -290,11 +646,19 @@
                         </div>
                         <h6 class="card-title fw-bold">{{ .Name }}</h6>
                         <p class="card-text small text-muted text-truncate">{{ .Description }}</p>
-                        
+
                         <div class="mt-auto">
-                            <button class="btn btn-pinjam w-100 btn-sm py-2" onclick="openModal('{{ .ID }}', '{{ .Name }}')">
+                            {{ if $.IsBlocked }}
+                            <button class="btn btn-secondary w-100 btn-sm py-2 opacity-50" disabled
+                                title="{{ $.BlockReason }}">
+                                <i class="fas fa-lock me-1"></i> Terkunci
+                            </button>
+                            {{ else }}
+                            <button class="btn btn-pinjam w-100 btn-sm py-2"
+                                onclick="openModal('{{ .ID }}', '{{ .Name }}')">
                                 Pinjam
                             </button>
+                            {{ end }}
                         </div>
                     </div>
                 </div>
@@ -315,24 +679,33 @@
                     <h5 class="modal-title">Form Peminjaman</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="/user/pinjam" method="POST">
+                <form action="/user/pinjam" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         <input type="hidden" name="item_id" id="modalItemID">
-                        
+
                         <div class="text-center mb-4 p-3 bg-light rounded border border-dashed">
-                            <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Anda akan meminjam</small>
+                            <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Anda akan
+                                meminjam</small>
                             <h4 id="modalItemName" class="mb-0 text-primary fw-bold mt-1">Nama Barang</h4>
                         </div>
 
                         <div class="mb-3">
+                            <label class="form-label fw-bold">Unggah KTM (Kartu Mahasiswa)</label>
+                            <input type="file" name="student_id_card" class="form-control" accept="image/*" required>
+                            <div class="form-text">Wajib diunggah sebagai bukti identitas.</div>
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label fw-bold">Durasi (Hari)</label>
-                            <input type="number" name="duration" class="form-control" value="1" min="1" max="7" required>
+                            <input type="number" name="duration" class="form-control" value="1" min="1" max="7"
+                                required>
                             <div class="form-text">Maksimal 7 hari peminjaman.</div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Keperluan</label>
-                            <textarea name="notes" class="form-control" rows="2" placeholder="Contoh: Tugas Akhir..."></textarea>
+                            <textarea name="notes" class="form-control" rows="2"
+                                placeholder="Contoh: Tugas Akhir..."></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -361,15 +734,15 @@
             name = name.toLowerCase();
             if (name.includes('laptop') || name.includes('kamera') || name.includes('proyektor')) return 'elektronik';
             if (name.includes('buku') || name.includes('pulpen') || name.includes('meja')) return 'alat tulis';
-           
+
             return 'lainnya';
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.item-element').forEach(el => {
                 let name = el.getAttribute('data-name');
                 let icon = el.querySelector('.item-dynamic-icon');
-                if(icon) icon.className = "fas item-dynamic-icon " + getIconClass(name);
+                if (icon) icon.className = "fas item-dynamic-icon " + getIconClass(name);
                 el.setAttribute('data-category', detectCategory(name));
             });
         });
@@ -383,11 +756,11 @@
             document.querySelectorAll('.item-element').forEach(el => {
                 let name = el.getAttribute('data-name').toLowerCase();
                 let itemCat = el.getAttribute('data-category');
-                
+
                 let matchSearch = name.includes(input);
                 let matchCat = category === 'all' || itemCat === category;
 
-                if(matchSearch && matchCat) {
+                if (matchSearch && matchCat) {
                     el.style.display = "";
                     count++;
                 } else {
@@ -404,7 +777,40 @@
             document.getElementById('modalItemName').innerText = name;
             new bootstrap.Modal(document.getElementById('loanModal')).show();
         }
+
+        // --- Fungsi Tandai Notif Dibaca ---
+        function markAsRead(id, element) {
+            const formData = new FormData();
+            formData.append('notif_id', id);
+
+            fetch('/user/notif/read', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const textEl = element.querySelector('.small');
+                    const iconEl = element.querySelector('i');
+                    const badgeEl = document.querySelector('.navbar .badge');
+
+                    if (textEl.classList.contains('fw-bold')) {
+                        textEl.classList.remove('fw-bold');
+                        textEl.classList.add('text-muted');
+                        iconEl.classList.replace('fa-envelope', 'fa-envelope-open');
+                        iconEl.classList.replace('text-primary', 'text-muted');
+                        element.classList.remove('bg-primary-subtle', 'bg-opacity-10', 'border-start', 'border-primary', 'border-4');
+
+                        if (badgeEl) {
+                            let count = parseInt(badgeEl.innerText) - 1;
+                            if (count <= 0) badgeEl.remove();
+                            else badgeEl.innerText = count;
+                        }
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
     </script>
 </body>
+
 </html>
 {{ end }}

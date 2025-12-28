@@ -1,6 +1,7 @@
 {{ define "user/history.html" }}
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,203 +9,470 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         :root {
-            /* Samakan style dengan Dashboard */
             --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            --bg-body: #f8fafc;
+            --secondary-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --bg-body: #ebf4ff;
+            /* Light blue background */
             --bg-surface: #ffffff;
             --secondary-text: #64748b;
             --primary-color: #2563eb;
-            
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --radius-lg: 1rem;
-            --radius-md: 0.75rem;
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --radius-lg: 1.5rem;
+            --radius-md: 1rem;
         }
-        
+
+        .btn-premium,
+        .btn-primary,
+        .btn-secondary,
+        .btn-success,
+        .btn-warning,
+        .btn-danger {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .btn-hover-effect:hover,
+        .btn-primary:hover,
+        .btn-success:hover,
+        .btn-warning:hover,
+        .btn-danger:hover {
+            transform: scale(1.05) !important;
+            opacity: 0.95;
+            letter-spacing: normal !important;
+        }
+
+        .standard-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+        }
+
+        .standard-card:hover {
+            transform: translateY(-5px) scale(1.02) !important;
+            box-shadow: var(--shadow-lg) !important;
+        }
+
+        .form-control[type="file"]::file-selector-button,
+        .form-control[type="file"]::-webkit-file-upload-button {
+            background: #f1f5f9 !important;
+            color: #475569 !important;
+            border: 1px solid #e2e8f0 !important;
+            padding: 8px 20px !important;
+            border-radius: 8px !important;
+            margin-right: 10px !important;
+            cursor: pointer !important;
+            font-weight: 600 !important;
+            font-size: 0.9rem !important;
+            box-shadow: none !important;
+            transition: all 0.2s;
+        }
+
+        .form-control[type="file"]::file-selector-button:hover,
+        .form-control[type="file"]::-webkit-file-upload-button:hover {
+            background: #e2e8f0 !important;
+            color: #334155 !important;
+            border-color: #cbd5e1 !important;
+        }
+
+        .form-control[type="file"] {
+            padding: 8px;
+            border: 2px dashed #e2e8f0;
+            background: #f8fafc;
+            border-radius: 0.75rem;
+        }
+
         body {
             background-color: var(--bg-body);
             font-family: 'Inter', sans-serif;
-            color: #334155;
+            color: #1e293b;
             min-height: 100vh;
+            scroll-behavior: smooth;
         }
 
-        /* Navbar Style */
+        /* Premium Top Navbar */
         .navbar {
-            background: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-sm);
-            padding-top: 1rem; padding-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.85rem 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
         }
+
         .navbar-brand {
-            font-weight: 700; font-size: 1.35rem;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            font-size: 1.6rem;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
+
+        .brand-icon-box {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover .brand-icon-box {
+            transform: rotate(-10deg) scale(1.1);
+        }
+
+        .brand-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .nav-link {
-            color: var(--secondary-text) !important; font-weight: 600;
-            padding: 0.5rem 1rem !important; border-radius: 0.5rem; transition: all 0.2s;
+            font-weight: 600;
+            color: #475569 !important;
+            padding: 0.7rem 1.4rem !important;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            margin: 0 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .nav-link:hover, .nav-link.active {
+
+        .nav-link:hover {
             color: var(--primary-color) !important;
-            background: rgba(37, 99, 235, 0.05);
+            background: rgba(37, 99, 235, 0.06);
+            transform: translateY(-1px);
         }
-        .btn-logout { border: 2px solid #e2e8f0 !important; }
-        .btn-logout:hover { border-color: #ef4444 !important; color: #ef4444 !important; background: #fef2f2 !important; }
 
-        /* Header Area */
-        .header-section {
+        .nav-link.active {
+            color: white !important;
             background: var(--primary-gradient);
-            color: white; padding: 3rem 0 5rem;
-            margin-bottom: 0; position: relative; overflow: hidden;
-        }
-        .header-section::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background-image: radial-gradient(circle at 20% 150%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 50%);
-            pointer-events: none;
+            box-shadow: 0 8px 15px rgba(37, 99, 235, 0.2);
         }
 
-        .main-container { margin-top: -3rem; position: relative; z-index: 10; }
+        .nav-profile {
+            background: white;
+            padding: 6px 16px 6px 6px;
+            border-radius: 50px;
+            border: 1px solid #f1f5f9;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
 
-        /* Table Card Styling */
-        .history-card {
-            background: var(--bg-surface);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-lg);
+        .nav-profile:hover {
+            box-shadow: var(--shadow-md);
+            border-color: #e2e8f0;
+            transform: translateY(-1px);
+        }
+
+        .main-container {
+            margin-top: -4rem;
+            position: relative;
+            z-index: 100;
+            padding-bottom: 5rem;
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 5rem 0 7rem;
+            color: white;
+            position: relative;
+        }
+
+        .dropdown-menu-notif {
+            width: 420px !important;
             border: none;
+            box-shadow: var(--shadow-lg);
+            border-radius: 20px;
+            padding: 0;
             overflow: hidden;
         }
 
-        .table { margin-bottom: 0; }
-        .table thead th {
-            background-color: #f1f5f9;
-            color: var(--secondary-text);
-            font-weight: 600;
+        .dropdown-menu-profile {
+            min-width: 180px !important;
+            width: auto !important;
+            border: none;
+            box-shadow: var(--shadow-lg);
+            border-radius: 16px;
+            padding: 8px;
+        }
+
+        .notif-item {
+            white-space: normal;
+            padding: 1.25rem;
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.2s;
+        }
+
+        /* Logout Button Fix */
+        .dropdown-item.text-danger:active,
+        .dropdown-item.text-danger:focus {
+            background-color: #fee2e2 !important;
+            color: #dc2626 !important;
+        }
+
+        /* Logout Button */
+        .btn-logout {
+            color: #ef4444 !important;
+            font-weight: 700;
+            border: 1.5px solid #fee2e2;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: #fef2f2 !important;
+            color: #b91c1c !important;
+            border-color: #ef4444;
+            transform: scale(1.05);
+        }
+
+        .table-premium {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .table-premium thead th {
+            color: #64748b;
+            font-weight: 700;
             text-transform: uppercase;
             font-size: 0.75rem;
-            letter-spacing: 0.05em;
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #e2e8f0;
-            border-top: none;
+            letter-spacing: 1.5px;
+            padding: 1.5rem 1rem;
+            border-bottom: 2px solid #f1f5f9;
         }
-        .table tbody td {
-            padding: 1.25rem 1.5rem;
-            vertical-align: middle;
-            border-bottom: 1px solid #f1f5f9;
-            color: #334155;
+
+        .table-premium tbody td {
+            padding: 1.75rem 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
             font-weight: 500;
+            color: #334155;
+            transition: all 0.3s ease;
         }
-        .table tbody tr:last-child td { border-bottom: none; }
-        .table tbody tr { transition: background-color 0.2s; }
-        .table tbody tr:hover { background-color: #f8fafc; }
+
+        .table-premium tbody tr {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .table-premium tbody tr:hover td {
+            background: rgba(37, 99, 235, 0.04);
+            color: var(--primary-color);
+        }
+
+        .history-card {
+            background: linear-gradient(to bottom right, #ffffff, #fcfdff);
+            border-radius: 32px;
+            padding: 2rem 3rem;
+            box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        /* Barang Icon Styling */
+        .barang-icon {
+            width: 42px;
+            height: 42px;
+            background: #f8fafc;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3b82f6;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .table-premium tbody tr:hover .barang-icon {
+            background: white;
+            box-shadow: 0 8px 15px rgba(37, 99, 235, 0.1);
+            transform: scale(1.1);
+        }
 
         /* Status Badges */
         .status-badge {
-            padding: 0.5em 1em;
-            border-radius: 9999px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            font-weight: 700;
             font-size: 0.75rem;
-            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 6px;
         }
-        .status-dipinjam { background-color: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; } /* Orange lembut */
-        .status-selesai { background-color: #f0fdf4; color: #15803d; border: 1px solid #dcfce7; } /* Hijau lembut */
-        
-        .empty-state { padding: 4rem 2rem; text-align: center; }
 
-        /* Notifikasi Dropdown */
-        .dropdown-menu-notif {
-            width: 320px;
-            border: none;
-            box-shadow: var(--shadow-lg);
-            max-height: 400px;
-            overflow-y: auto;
-            border-radius: var(--radius-lg);
+        .status-dipinjam {
+            background: #fff7ed;
+            color: #c2410c;
+            border: 1px solid #ffedd5;
         }
-        .notif-item {
-            white-space: normal;
-            padding: 10px 15px;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 0.9rem;
+
+        .status-selesai {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #dcfce7;
         }
-        .notif-item:hover { background-color: #f8fafc; }
-        .notif-unread { font-weight: bold; color: #1e293b; }
-        .notif-read { color: var(--secondary-text); }
+
+        .status-pending {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #dbeafe;
+        }
+
+        .status-rejected {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fee2e2;
+        }
+
+        .form-control[type="file"]::file-selector-button {
+            background: #f1f5f9 !important;
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 5px 15px !important;
+            margin-right: 10px !important;
+            font-weight: 600 !important;
+            font-size: 0.8rem;
+        }
+
+        .btn-file-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.5rem 1rem;
+            background: #f1f5f9;
+            color: #475569 !important;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .btn-file-link:hover {
+            background: #e2e8f0;
+            color: #1e293b !important;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
+
 <body>
 
+    <!-- Premium Top Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-shapes me-2"></i>Aset Kampus
+            <a class="navbar-brand" href="/user/dashboard">
+                <div class="brand-icon-box">
+                    <i class="fas fa-shapes"></i>
+                </div>
+                <span class="brand-text">Aset Kampus</span>
             </a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <i class="fas fa-bars-staggered text-primary"></i>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
                         <a class="nav-link" href="/user/dashboard">
-                            <i class="fas fa-layer-group me-1"></i>Daftar Barang
+                            <i class="fas fa-layer-group"></i> Daftar Barang
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/user/history">
-                            <i class="fas fa-clock-rotate-left me-1"></i>Riwayat
+                            <i class="fas fa-clock-rotate-left"></i> Riwayat
                         </a>
                     </li>
-                    <li class="nav-item dropdown ms-lg-3">
-                        <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-bell fa-lg"></i>
 
-                            {{ if .UnreadCount }}
-                                {{ if gt .UnreadCount 0 }}
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ .UnreadCount }}
-                                </span>
-                                {{ end }}
+                    <li class="nav-item dropdown px-lg-2">
+                        <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell"></i>
+                            {{ if gt .UnreadCount 0 }}
+                            <span
+                                class="position-absolute top-2 start-100 translate-middle badge rounded-circle bg-danger border border-2 border-white"
+                                style="padding: 4px; min-width: 10px; height: 10px;">
+                                <span class="visually-hidden">unread</span>
+                            </span>
                             {{ end }}
                         </a>
-
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-notif">
-                            <li class="p-2 border-bottom fw-bold text-center bg-light">Notifikasi</li>
-
-                            {{ range .Notifs }}
-                            <li>
-                                <a class="dropdown-item notif-item" href="#">
-                                    <div class="d-flex align-items-start">
-                                        <div class="me-2 mt-1">
-                                            {{ if .IsRead }}
-                                            <i class="fas fa-envelope-open text-muted"></i>
-                                            {{ else }}
-                                            <i class="fas fa-envelope text-primary"></i>
-                                            {{ end }}
-                                        </div>
-                                        <div>
-                                            <div class="{{ if not .IsRead }}notif-unread{{ else }}notif-read{{ end }}">
-                                                {{ .Message }}
-                                            </div>
-                                            <small class="text-muted" style="font-size: 0.75rem;">
-                                                {{ .CreatedAt.Format "02 Jan 15:04" }}
-                                            </small>
-                                        </div>
-                                    </div>
-                                </a>
+                        <ul
+                            class="dropdown-menu dropdown-menu-end dropdown-menu-notif border-0 shadow-lg p-2 rounded-4 mt-3">
+                            <li class="p-3 border-bottom d-flex justify-content-between align-items-center">
+                                <span class="fw-bold">Notifikasi</span>
+                                <span class="badge bg-primary-subtle text-primary rounded-pill">{{ .UnreadCount }}
+                                    Baru</span>
                             </li>
-                            {{ else }}
-                            <li class="p-4 text-center text-muted small">Tidak ada notifikasi baru.</li>
-                            {{ end }}
+                            <div style="max-height: 400px; overflow-y: auto;">
+                                {{ range .Notifs }}
+                                <li>
+                                    <a class="dropdown-item p-3 rounded-3 mb-1 {{ if not .IsRead }}bg-primary-subtle bg-opacity-10 border-start border-primary border-4{{ end }}"
+                                        href="javascript:void(0)" onclick="markAsRead('{{ .ID }}', this)"
+                                        style="white-space: normal;">
+                                        <div class="d-flex align-items-start gap-3">
+                                            <div
+                                                class="notif-icon-wrapper {{ if .IsRead }}text-muted{{ else }}text-primary{{ end }}">
+                                                <i
+                                                    class="fas {{ if .IsRead }}fa-envelope-open{{ else }}fa-envelope{{ end }} mt-1"></i>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <div class="small {{ if not .IsRead }}fw-bold text-dark{{ else }}text-muted{{ end }}"
+                                                    style="line-height: 1.5;">
+                                                    {{ .Message }}
+                                                </div>
+                                                <div class="smaller text-muted mt-1" style="font-size: 0.7rem;">
+                                                    <i class="far fa-clock me-1"></i>{{ .CreatedAt.Format "02 Jan 15:04"
+                                                    }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                {{ else }}
+                                <li class="p-4 text-center text-muted">
+                                    <i class="fas fa-bell-slash d-block mb-2 opacity-25 fa-2x"></i>
+                                    <span class="small">Tidak ada notifikasi baru</span>
+                                </li>
+                                {{ end }}
+                            </div>
                         </ul>
                     </li>
 
                     <li class="nav-item ms-lg-3">
-                        <a class="nav-link btn-logout px-3" href="/logout">
-                            <i class="fas fa-arrow-right-from-bracket me-1"></i>Logout
-                        </a>
+                        <div class="dropdown">
+                            <a href="#"
+                                class="nav-profile d-flex align-items-center text-decoration-none dropdown-toggle border-0 shadow-none"
+                                data-bs-toggle="dropdown">
+                                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2"
+                                    style="width: 32px; height: 32px;">
+                                    <span class="fw-bold text-white small">{{ slice .UserName 0 1 }}</span>
+                                </div>
+                                <span class="small fw-bold text-muted d-none d-sm-inline">{{ .UserName }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-profile border-0 shadow-lg mt-3">
+                                <li>
+                                    <a class="dropdown-item rounded-3 text-danger fw-bold" href="/logout">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -220,27 +488,31 @@
 
     <div class="container main-container pb-5">
         <div class="history-card">
-            <div class="table-responsive">
-                <table class="table align-middle">
+            <div>
+                <table class="table table-premium align-middle mb-0">
                     <thead>
                         <tr>
-                            <th width="35%">Barang</th>
-                            <th width="20%">Tgl Pinjam</th>
-                            <th width="20%">Batas Kembali</th>
-                            <th width="25%">Status</th>
+                            <th width="20%">Barang</th>
+                            <th width="15%">Tgl Pinjam</th>
+                            <th width="15%">Batas Kembali</th>
+                            <th width="15%">Denda</th>
+                            <th width="35%">Status & Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         {{ range .Loans }}
-                        <tr>
+                        <tr class="history-row" data-name="{{ .Item.Name }}">
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <div class="bg-light rounded p-2 me-3 text-primary">
-                                        <i class="fas fa-box"></i>
+                                    <div class="barang-icon me-3">
+                                        <i class="fas fa-box-open history-dynamic-icon"></i>
                                     </div>
                                     <div>
-                                        <div class="fw-bold">{{ .Item.Name }}</div>
-                                        <small class="text-muted" style="font-size: 0.8rem;">ID: #{{ .ID }}</small>
+                                        <div class="fw-bold mb-0" style="color: #1e293b; font-size: 1rem;">{{ .Item.Name
+                                            }}</div>
+                                        <small class="text-muted"
+                                            style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px;">ID: #{{
+                                            .ID }}</small>
                                     </div>
                                 </div>
                             </td>
@@ -249,19 +521,98 @@
                                 {{ .BorrowDate.Format "02 Jan 2006" }}
                             </td>
                             <td>
-                                <i class="far fa-calendar-check text-muted me-2"></i>
                                 {{ .DueDate.Format "02 Jan 2006" }}
                             </td>
                             <td>
-                                {{ if eq .Status "dipinjam" }}
-                                <span class="status-badge status-dipinjam">
-                                    <i class="fas fa-hourglass-half"></i> Sedang Dipinjam
-                                </span>
+                                {{ if gt .FineAmount 0 }}
+                                <span class="text-danger fw-bold">Rp {{ .FineAmount }}</span>
+                                {{ if .IsFinePaid }}
+                                <br><small class="badge bg-success">Lunas</small>
                                 {{ else }}
-                                <span class="status-badge status-selesai">
-                                    <i class="fas fa-check-circle"></i> Dikembalikan
-                                </span>
+                                <br><small class="badge bg-warning text-dark">Belum Bayar</small>
                                 {{ end }}
+                                {{ else }}
+                                <span class="text-muted">-</span>
+                                {{ end }}
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2 flex-wrap">
+                                    {{ if eq .Status "dipinjam" }}
+                                    <span class="status-badge status-dipinjam">
+                                        <i class="fas fa-hourglass-half"></i> Dipinjam
+                                    </span>
+                                    {{ else }}
+                                    <span class="status-badge status-selesai">
+                                        <i class="fas fa-check-circle"></i> Kembali
+                                    </span>
+                                    {{ end }}
+
+                                    {{ if and (gt .FineAmount 0) (not .IsFinePaid) }}
+                                    <button class="btn btn-sm btn-outline-primary rounded-pill px-3"
+                                        data-bs-toggle="modal" data-bs-target="#modalBayar{{ .ID }}">
+                                        <i class="fas fa-wallet me-1"></i> Bayar
+                                    </button>
+
+                                    <!-- Modal Bayar -->
+                                    <div class="modal fade" id="modalBayar{{ .ID }}" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content border-0 shadow-lg"
+                                                style="border-radius: 1.5rem;">
+                                                <div class="modal-header border-0 pb-0">
+                                                    <h5 class="modal-title fw-bold">Pembayaran Denda</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-center py-4">
+                                                    <div class="mb-4">
+                                                        <div class="display-6 fw-bold text-primary mb-1">Rp {{
+                                                            .FineAmount }}</div>
+                                                        <p class="text-muted">Silahkan pilih metode pembayaran di
+                                                            bawah
+                                                        </p>
+                                                    </div>
+
+                                                    <form action="/user/pay" method="POST"
+                                                        enctype="multipart/form-data">
+                                                        <input type="hidden" name="loan_id" value="{{ .ID }}">
+
+                                                        <div class="mb-3 text-start">
+                                                            <label class="form-label small fw-bold">Pilih
+                                                                Metode:</label>
+                                                            <select name="payment_method" class="form-select rounded-3"
+                                                                required>
+                                                                <option value="DANA (08123456789)">DANA
+                                                                    (0812-3456-789)
+                                                                </option>
+                                                                <option value="Bank VA (12345678)">Virtual Account
+                                                                    (Mandiri/BNI)</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="mb-4 text-start">
+                                                            <label class="form-label small fw-bold">Unggah Bukti
+                                                                (Screenshot):</label>
+                                                            <input type="file" name="payment_proof"
+                                                                class="form-control rounded-3" accept="image/*"
+                                                                required>
+                                                        </div>
+
+                                                        <div class="d-grid">
+                                                            <button type="submit"
+                                                                class="btn btn-primary p-3 rounded-4 fw-bold">
+                                                                <i class="fas fa-paper-plane me-2"></i> Kirim Bukti
+                                                                Pembayaran
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                    <p class="mt-4 mb-0 small text-muted">Setelah klik, mohon tunggu
+                                                        Admin memverifikasi dana Anda.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{ end }}
+                                </div>
                             </td>
                         </tr>
                         {{ else }}
@@ -271,7 +622,8 @@
                                     <i class="fas fa-history display-4 mb-3 text-muted opacity-25"></i>
                                     <h5 class="fw-bold text-secondary">Belum ada riwayat</h5>
                                     <p class="text-muted small">Anda belum melakukan peminjaman barang apapun.</p>
-                                    <a href="/user/dashboard" class="btn btn-primary mt-3 px-4 rounded-pill" style="background: var(--primary-gradient); border:none;">
+                                    <a href="/user/dashboard" class="btn btn-primary mt-3 px-4 rounded-pill"
+                                        style="background: var(--primary-gradient); border:none;">
                                         Mulai Pinjam Barang
                                     </a>
                                 </div>
@@ -285,6 +637,57 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function getIconClass(name) {
+            name = name.toLowerCase();
+            if (name.includes('laptop') || name.includes('pc')) return 'fa-laptop';
+            if (name.includes('kamera')) return 'fa-camera';
+            if (name.includes('proyektor') || name.includes('kabel proyektor')) return 'fa-video';
+            if (name.includes('buku')) return 'fa-book';
+            if (name.includes('bola') || name.includes('raket')) return 'fa-futbol';
+            return 'fa-box-open';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.history-row').forEach(row => {
+                let name = row.getAttribute('data-name');
+                let icon = row.querySelector('.history-dynamic-icon');
+                if (icon) icon.className = "fas history-dynamic-icon " + getIconClass(name);
+            });
+        });
+
+        function markAsRead(id, element) {
+            const formData = new FormData();
+            formData.append('notif_id', id);
+
+            fetch('/user/notif/read', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const textEl = element.querySelector('.small');
+                    const iconEl = element.querySelector('i');
+                    const badgeEl = document.querySelector('.navbar .badge');
+
+                    if (textEl.classList.contains('fw-bold')) {
+                        textEl.classList.remove('fw-bold');
+                        textEl.classList.add('text-muted');
+                        iconEl.classList.replace('fa-envelope', 'fa-envelope-open');
+                        iconEl.classList.replace('text-primary', 'text-muted');
+                        element.classList.remove('bg-primary-subtle', 'bg-opacity-10', 'border-start', 'border-primary', 'border-4');
+
+                        if (badgeEl) {
+                            let count = parseInt(badgeEl.innerText) - 1;
+                            if (count <= 0) badgeEl.remove();
+                            else badgeEl.innerText = count;
+                        }
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
 </body>
+
 </html>
 {{ end }}
