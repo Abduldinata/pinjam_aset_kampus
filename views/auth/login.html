@@ -1,0 +1,571 @@
+{{ define "auth/login.html" }} 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Peminjaman Aset</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --secondary-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --bg-pattern: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                          radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -250px;
+            left: -250px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -200px;
+            right: -200px;
+            animation: float 15s ease-in-out infinite reverse;
+        }
+
+        /* Cute floating icons */
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.3);
+            animation: floatAround 20s ease-in-out infinite;
+        }
+
+        .floating-icon:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 25s;
+        }
+
+        .floating-icon:nth-child(2) {
+            top: 20%;
+            right: 15%;
+            animation-delay: 5s;
+            animation-duration: 22s;
+        }
+
+        .floating-icon:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 10s;
+            animation-duration: 28s;
+        }
+
+        .floating-icon:nth-child(4) {
+            top: 60%;
+            right: 25%;
+            animation-delay: 3s;
+            animation-duration: 24s;
+        }
+
+        .floating-icon:nth-child(5) {
+            bottom: 15%;
+            left: 70%;
+            animation-delay: 8s;
+            animation-duration: 26s;
+        }
+
+        .floating-icon:nth-child(6) {
+            top: 40%;
+            left: 5%;
+            animation-delay: 12s;
+            animation-duration: 21s;
+        }
+
+        .floating-icon:nth-child(7) {
+            bottom: 50%;
+            right: 10%;
+            animation-delay: 6s;
+            animation-duration: 23s;
+        }
+
+        .floating-icon:nth-child(8) {
+            top: 75%;
+            left: 40%;
+            animation-delay: 15s;
+            animation-duration: 27s;
+        }
+
+        /* Additional cute particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { top: 15%; left: 25%; animation-delay: 0s; }
+        .particle:nth-child(2) { top: 35%; left: 75%; animation-delay: 1s; }
+        .particle:nth-child(3) { top: 55%; left: 15%; animation-delay: 2s; }
+        .particle:nth-child(4) { top: 75%; left: 85%; animation-delay: 0.5s; }
+        .particle:nth-child(5) { top: 25%; left: 65%; animation-delay: 1.5s; }
+        .particle:nth-child(6) { top: 45%; left: 35%; animation-delay: 2.5s; }
+        .particle:nth-child(7) { top: 65%; left: 55%; animation-delay: 0.8s; }
+        .particle:nth-child(8) { top: 85%; left: 45%; animation-delay: 1.2s; }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        /* Geometric floating shapes */
+        .shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: shapeFloat 30s linear infinite;
+        }
+
+        .shape.circle {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+        }
+
+        .shape.square {
+            width: 15px;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 3px;
+        }
+
+        .shape.triangle {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 14px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .shape:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .shape:nth-child(2) { top: 30%; right: 20%; animation-delay: 7s; }
+        .shape:nth-child(3) { bottom: 40%; left: 30%; animation-delay: 14s; }
+        .shape:nth-child(4) { top: 50%; right: 40%; animation-delay: 21s; }
+        .shape:nth-child(5) { bottom: 20%; left: 60%; animation-delay: 28s; }
+        .shape:nth-child(6) { top: 70%; right: 70%; animation-delay: 35s; }
+
+        @keyframes shapeFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        @keyframes floatAround {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translate(30px, -20px) rotate(90deg) scale(1.1);
+            }
+            50% {
+                transform: translate(-20px, -40px) rotate(180deg) scale(0.9);
+            }
+            75% {
+                transform: translate(-30px, 20px) rotate(270deg) scale(1.05);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary-gradient);
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .logo-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .login-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .input-group-custom {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 1.1rem;
+            z-index: 5;
+        }
+
+        .form-control {
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            background: white;
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #cbd5e1;
+        }
+
+        .btn-login {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 0.875rem 1.5rem;
+            font-weight: 700;
+            border-radius: 12px;
+            font-size: 1rem;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-login:hover::before {
+            left: 100%;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .alert {
+            border-radius: 12px;
+            border: none;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 2rem;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .footer-text i {
+            color: #ef4444;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            .login-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .login-title {
+                font-size: 1.5rem;
+            }
+            
+            .logo-icon {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-icon i {
+                font-size: 1.75rem;
+            }
+        }
+
+        /* Password Toggle */
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #94a3b8;
+            z-index: 5;
+            transition: color 0.3s;
+        }
+
+        .password-toggle:hover {
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Floating cute icons background -->
+<div class="floating-icons">
+    <i class="fas fa-star floating-icon"></i>
+    <i class="fas fa-heart floating-icon"></i>
+    <i class="fas fa-moon floating-icon"></i>
+    <i class="fas fa-cloud floating-icon"></i>
+    <i class="fas fa-sun floating-icon"></i>
+    <i class="fas fa-snowflake floating-icon"></i>
+    <i class="fas fa-leaf floating-icon"></i>
+    <i class="fas fa-magic floating-icon"></i>
+</div>
+
+<!-- Twinkling particles -->
+<div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+</div>
+
+<!-- Floating geometric shapes -->
+<div class="shapes">
+    <div class="shape circle"></div>
+    <div class="shape square"></div>
+    <div class="shape triangle"></div>
+    <div class="shape circle"></div>
+    <div class="shape square"></div>
+    <div class="shape triangle"></div>
+</div>
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="logo-section">
+            <div class="logo-icon">
+                <i class="fas fa-shapes"></i>
+            </div>
+            <h1 class="login-title">Selamat Datang!</h1>
+            <p class="login-subtitle">Masuk ke sistem peminjaman aset kampus</p>
+        </div>
+        
+        {{ if .Error }}
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle me-2"></i>{{ .Error }}
+        </div>
+        {{ end }}
+
+        <form action="/login" method="POST">
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <div class="input-group-custom">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" name="email" class="form-control" required 
+                           placeholder="nama@email.com" autocomplete="email">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <div class="input-group-custom">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" name="password" id="passwordInput" 
+                           class="form-control" required placeholder="Masukkan password"
+                           autocomplete="current-password">
+                    <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-login">
+                <i class="fas fa-sign-in-alt me-2"></i>Masuk Sekarang
+            </button>
+        </form>
+
+        <div class="footer-text">
+            <small>
+                Dibuat dengan <i class="fas fa-heart"></i> oleh Tim 3
+            </small>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Password Toggle
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('passwordInput');
+
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    // Auto-focus first input
+    document.querySelector('input[name="email"]').focus();
+</script>
+
+</body>
+</html>
+{{ end }}

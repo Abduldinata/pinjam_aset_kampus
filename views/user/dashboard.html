@@ -1,0 +1,410 @@
+{{ define "user/dashboard.html" }}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Mahasiswa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Samakan style dengan Dashboard */
+            --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --secondary-text: #64748b;
+            --primary-color: #2563eb;
+
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius-lg: 1rem;
+            --radius-md: 0.75rem;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            font-family: 'Inter', sans-serif;
+            color: #334155;
+            min-height: 100vh;
+        }
+
+        /* Navbar Style */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            padding-top: 1rem; padding-bottom: 1rem;
+        }
+        .navbar-brand {
+            font-weight: 700; font-size: 1.35rem;
+            background: var(--primary-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-link {
+            color: var(--secondary-text) !important; font-weight: 600;
+            padding: 0.5rem 1rem !important; border-radius: 0.5rem; transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+            background: rgba(37, 99, 235, 0.05);
+        }
+        .btn-outline-danger { border: 2px solid #e2e8f0 !important; }
+        .btn-outline-danger:hover { border-color: #ef4444 !important; color: #ef4444 !important; background: #fef2f2 !important; }
+        
+        /* Header Area */
+        .header-section {
+            background: var(--primary-gradient);
+            color: white; padding: 3rem 0 5rem;
+            margin-bottom: 0; position: relative; overflow: hidden;
+        }
+        .header-section::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(circle at 20% 150%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 50%);
+            pointer-events: none;
+        }
+
+        .main-container { margin-top: -3rem; position: relative; z-index: 10; }
+
+        /* Search Card Style */
+        .search-card {
+            background: var(--bg-surface);
+            border: none;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-card .form-control,
+        .search-card .form-select {
+            border: 2px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .search-card .form-control:focus,
+        .search-card .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-card .input-group-text {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            border-right: none;
+            color: var(--secondary-text);
+        }
+
+        .search-card .form-control {
+            border-left: none;
+        }
+
+        .search-card label {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Notifikasi Dropdown */
+        .dropdown-menu-notif {
+            width: 320px;
+            border: none;
+            box-shadow: var(--shadow-lg);
+            max-height: 400px;
+            overflow-y: auto;
+            border-radius: var(--radius-lg);
+        }
+        .notif-item {
+            white-space: normal;
+            padding: 10px 15px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.9rem;
+        }
+        .notif-item:hover { background-color: #f8fafc; }
+        .notif-unread { font-weight: bold; color: #1e293b; }
+        .notif-read { color: var(--secondary-text); }
+
+        /* Card Barang */
+        .item-card {
+            border: none;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.2s;
+            background: var(--bg-surface);
+            height: 100%;
+        }
+        .item-card:hover { transform: translateY(-5px); }
+        .card-img-top-wrapper {
+            height: 140px;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+        .card-img-top-wrapper i { font-size: 3rem; color: #3b82f6; }
+
+        .btn-pinjam {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+        }
+        .btn-pinjam:hover { background: #1d4ed8; color: white; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-shapes me-2"></i>Aset Kampus
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/user/dashboard">
+                            <i class="fas fa-layer-group me-1"></i>Daftar Barang
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/history">
+                            <i class="fas fa-clock-rotate-left me-1"></i>Riwayat
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown ms-lg-3">
+                        <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell fa-lg"></i>
+
+                            {{ if .UnreadCount }}
+                                {{ if gt .UnreadCount 0 }}
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ .UnreadCount }}
+                                </span>
+                                {{ end }}
+                            {{ end }}
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-notif">
+                            <li class="p-2 border-bottom fw-bold text-center bg-light">Notifikasi</li>
+
+                            {{ range .Notifs }}
+                            <li>
+                                <a class="dropdown-item notif-item" href="#">
+                                    <div class="d-flex align-items-start">
+                                        <div class="me-2 mt-1">
+                                            {{ if .IsRead }}
+                                            <i class="fas fa-envelope-open text-muted"></i>
+                                            {{ else }}
+                                            <i class="fas fa-envelope text-primary"></i>
+                                            {{ end }}
+                                        </div>
+                                        <div>
+                                            <div class="{{ if not .IsRead }}notif-unread{{ else }}notif-read{{ end }}">
+                                                {{ .Message }}
+                                            </div>
+                                            <small class="text-muted" style="font-size: 0.75rem;">
+                                                {{ .CreatedAt.Format "02 Jan 15:04" }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            {{ else }}
+                            <li class="p-4 text-center text-muted small">Tidak ada notifikasi baru.</li>
+                            {{ end }}
+                        </ul>
+                    </li>
+
+                    <li class="nav-item ms-lg-3">
+                        <a class="nav-link btn-outline-danger px-3" href="/logout">
+                            <i class="fas fa-arrow-right-from-bracket me-1"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="header-section">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-2">Peminjaman Aset Kampus</h2>
+            <p class="opacity-75 mb-0">Cari dan pinjam barang kebutuhan kuliahmu di sini</p>
+        </div>
+    </div>
+
+    <div class="container main-container pb-5">
+        <!-- Search Card -->
+        <div class="search-card">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <label for="searchInput">
+                        <i class="fas fa-search me-1"></i>Cari Barang
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input type="text" id="searchInput" class="form-control" placeholder="Cari barang (Laptop, Proyektor...)" onkeyup="searchItems()">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="categorySelect">
+                        <i class="fas fa-filter me-1"></i>Kategori
+                    </label>
+                    <select id="categorySelect" class="form-select" onchange="filterCategory()">
+                        <option value="all">Semua Kategori</option>
+                        <option value="elektronik">Elektronik</option>
+                        <option value="alat tulis">Alat Tulis</option>
+                        <option value="lainnya">Lainnya</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="fw-bold mb-3"><i class="fas fa-box-open me-2 text-primary"></i>Barang Tersedia</h5>
+        
+        <div class="row g-4" id="itemsContainer">
+            {{ range .Items }}
+            <div class="col-6 col-md-3 item-element" data-name="{{ .Name }}">
+                <div class="card item-card h-100">
+                    <div class="card-img-top-wrapper">
+                        <i class="fas fa-box item-dynamic-icon"></i>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="badge bg-success bg-opacity-10 text-success">Stok: {{ .Stock }}</span>
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary">{{ .Location }}</span>
+                        </div>
+                        <h6 class="card-title fw-bold">{{ .Name }}</h6>
+                        <p class="card-text small text-muted text-truncate">{{ .Description }}</p>
+                        
+                        <div class="mt-auto">
+                            <button class="btn btn-pinjam w-100 btn-sm py-2" onclick="openModal('{{ .ID }}', '{{ .Name }}')">
+                                Pinjam
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ else }}
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                <p class="text-muted">Belum ada barang yang tersedia.</p>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+
+    <div class="modal fade" id="loanModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Form Peminjaman</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="/user/pinjam" method="POST">
+                    <div class="modal-body">
+                        <input type="hidden" name="item_id" id="modalItemID">
+                        
+                        <div class="text-center mb-4 p-3 bg-light rounded border border-dashed">
+                            <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">Anda akan meminjam</small>
+                            <h4 id="modalItemName" class="mb-0 text-primary fw-bold mt-1">Nama Barang</h4>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Durasi (Hari)</label>
+                            <input type="number" name="duration" class="form-control" value="1" min="1" max="7" required>
+                            <div class="form-text">Maksimal 7 hari peminjaman.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Keperluan</label>
+                            <textarea name="notes" class="form-control" rows="2" placeholder="Contoh: Tugas Akhir..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary fw-bold px-4">Konfirmasi Pinjam</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Set Icon & Kategori Otomatis
+        function getIconClass(name) {
+            name = name.toLowerCase();
+            if (name.includes('laptop') || name.includes('pc')) return 'fa-laptop';
+            if (name.includes('kamera')) return 'fa-camera';
+            if (name.includes('proyektor')) return 'fa-video';
+            if (name.includes('buku')) return 'fa-book';
+            if (name.includes('bola') || name.includes('raket')) return 'fa-futbol';
+            return 'fa-box-open';
+        }
+
+        function detectCategory(name) {
+            name = name.toLowerCase();
+            if (name.includes('laptop') || name.includes('kamera') || name.includes('proyektor')) return 'elektronik';
+            if (name.includes('buku') || name.includes('pulpen') || name.includes('meja')) return 'alat tulis';
+           
+            return 'lainnya';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.item-element').forEach(el => {
+                let name = el.getAttribute('data-name');
+                let icon = el.querySelector('.item-dynamic-icon');
+                if(icon) icon.className = "fas item-dynamic-icon " + getIconClass(name);
+                el.setAttribute('data-category', detectCategory(name));
+            });
+        });
+
+        // Search & Filter
+        function filterItems() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let category = document.getElementById('categorySelect').value;
+            let count = 0;
+
+            document.querySelectorAll('.item-element').forEach(el => {
+                let name = el.getAttribute('data-name').toLowerCase();
+                let itemCat = el.getAttribute('data-category');
+                
+                let matchSearch = name.includes(input);
+                let matchCat = category === 'all' || itemCat === category;
+
+                if(matchSearch && matchCat) {
+                    el.style.display = "";
+                    count++;
+                } else {
+                    el.style.display = "none";
+                }
+            });
+        }
+
+        function searchItems() { filterItems(); }
+        function filterCategory() { filterItems(); }
+
+        function openModal(id, name) {
+            document.getElementById('modalItemID').value = id;
+            document.getElementById('modalItemName').innerText = name;
+            new bootstrap.Modal(document.getElementById('loanModal')).show();
+        }
+    </script>
+</body>
+</html>
+{{ end }}

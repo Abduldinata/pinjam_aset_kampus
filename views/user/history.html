@@ -1,0 +1,290 @@
+{{ define "user/history.html" }}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Peminjaman</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Samakan style dengan Dashboard */
+            --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --secondary-text: #64748b;
+            --primary-color: #2563eb;
+            
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius-lg: 1rem;
+            --radius-md: 0.75rem;
+        }
+        
+        body {
+            background-color: var(--bg-body);
+            font-family: 'Inter', sans-serif;
+            color: #334155;
+            min-height: 100vh;
+        }
+
+        /* Navbar Style */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            padding-top: 1rem; padding-bottom: 1rem;
+        }
+        .navbar-brand {
+            font-weight: 700; font-size: 1.35rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-link {
+            color: var(--secondary-text) !important; font-weight: 600;
+            padding: 0.5rem 1rem !important; border-radius: 0.5rem; transition: all 0.2s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+            background: rgba(37, 99, 235, 0.05);
+        }
+        .btn-logout { border: 2px solid #e2e8f0 !important; }
+        .btn-logout:hover { border-color: #ef4444 !important; color: #ef4444 !important; background: #fef2f2 !important; }
+
+        /* Header Area */
+        .header-section {
+            background: var(--primary-gradient);
+            color: white; padding: 3rem 0 5rem;
+            margin-bottom: 0; position: relative; overflow: hidden;
+        }
+        .header-section::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(circle at 20% 150%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 50%);
+            pointer-events: none;
+        }
+
+        .main-container { margin-top: -3rem; position: relative; z-index: 10; }
+
+        /* Table Card Styling */
+        .history-card {
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: none;
+            overflow: hidden;
+        }
+
+        .table { margin-bottom: 0; }
+        .table thead th {
+            background-color: #f1f5f9;
+            color: var(--secondary-text);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            border-top: none;
+        }
+        .table tbody td {
+            padding: 1.25rem 1.5rem;
+            vertical-align: middle;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+            font-weight: 500;
+        }
+        .table tbody tr:last-child td { border-bottom: none; }
+        .table tbody tr { transition: background-color 0.2s; }
+        .table tbody tr:hover { background-color: #f8fafc; }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 0.5em 1em;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .status-dipinjam { background-color: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; } /* Orange lembut */
+        .status-selesai { background-color: #f0fdf4; color: #15803d; border: 1px solid #dcfce7; } /* Hijau lembut */
+        
+        .empty-state { padding: 4rem 2rem; text-align: center; }
+
+        /* Notifikasi Dropdown */
+        .dropdown-menu-notif {
+            width: 320px;
+            border: none;
+            box-shadow: var(--shadow-lg);
+            max-height: 400px;
+            overflow-y: auto;
+            border-radius: var(--radius-lg);
+        }
+        .notif-item {
+            white-space: normal;
+            padding: 10px 15px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.9rem;
+        }
+        .notif-item:hover { background-color: #f8fafc; }
+        .notif-unread { font-weight: bold; color: #1e293b; }
+        .notif-read { color: var(--secondary-text); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-shapes me-2"></i>Aset Kampus
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/dashboard">
+                            <i class="fas fa-layer-group me-1"></i>Daftar Barang
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/user/history">
+                            <i class="fas fa-clock-rotate-left me-1"></i>Riwayat
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown ms-lg-3">
+                        <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell fa-lg"></i>
+
+                            {{ if .UnreadCount }}
+                                {{ if gt .UnreadCount 0 }}
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ .UnreadCount }}
+                                </span>
+                                {{ end }}
+                            {{ end }}
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-notif">
+                            <li class="p-2 border-bottom fw-bold text-center bg-light">Notifikasi</li>
+
+                            {{ range .Notifs }}
+                            <li>
+                                <a class="dropdown-item notif-item" href="#">
+                                    <div class="d-flex align-items-start">
+                                        <div class="me-2 mt-1">
+                                            {{ if .IsRead }}
+                                            <i class="fas fa-envelope-open text-muted"></i>
+                                            {{ else }}
+                                            <i class="fas fa-envelope text-primary"></i>
+                                            {{ end }}
+                                        </div>
+                                        <div>
+                                            <div class="{{ if not .IsRead }}notif-unread{{ else }}notif-read{{ end }}">
+                                                {{ .Message }}
+                                            </div>
+                                            <small class="text-muted" style="font-size: 0.75rem;">
+                                                {{ .CreatedAt.Format "02 Jan 15:04" }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            {{ else }}
+                            <li class="p-4 text-center text-muted small">Tidak ada notifikasi baru.</li>
+                            {{ end }}
+                        </ul>
+                    </li>
+
+                    <li class="nav-item ms-lg-3">
+                        <a class="nav-link btn-logout px-3" href="/logout">
+                            <i class="fas fa-arrow-right-from-bracket me-1"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="header-section">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-2">Riwayat Peminjaman</h2>
+            <p class="opacity-75 mb-0">Lacak semua aktivitas peminjaman barang Anda di sini</p>
+        </div>
+    </div>
+
+    <div class="container main-container pb-5">
+        <div class="history-card">
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th width="35%">Barang</th>
+                            <th width="20%">Tgl Pinjam</th>
+                            <th width="20%">Batas Kembali</th>
+                            <th width="25%">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{ range .Loans }}
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-light rounded p-2 me-3 text-primary">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold">{{ .Item.Name }}</div>
+                                        <small class="text-muted" style="font-size: 0.8rem;">ID: #{{ .ID }}</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <i class="far fa-calendar text-muted me-2"></i>
+                                {{ .BorrowDate.Format "02 Jan 2006" }}
+                            </td>
+                            <td>
+                                <i class="far fa-calendar-check text-muted me-2"></i>
+                                {{ .DueDate.Format "02 Jan 2006" }}
+                            </td>
+                            <td>
+                                {{ if eq .Status "dipinjam" }}
+                                <span class="status-badge status-dipinjam">
+                                    <i class="fas fa-hourglass-half"></i> Sedang Dipinjam
+                                </span>
+                                {{ else }}
+                                <span class="status-badge status-selesai">
+                                    <i class="fas fa-check-circle"></i> Dikembalikan
+                                </span>
+                                {{ end }}
+                            </td>
+                        </tr>
+                        {{ else }}
+                        <tr>
+                            <td colspan="4">
+                                <div class="empty-state">
+                                    <i class="fas fa-history display-4 mb-3 text-muted opacity-25"></i>
+                                    <h5 class="fw-bold text-secondary">Belum ada riwayat</h5>
+                                    <p class="text-muted small">Anda belum melakukan peminjaman barang apapun.</p>
+                                    <a href="/user/dashboard" class="btn btn-primary mt-3 px-4 rounded-pill" style="background: var(--primary-gradient); border:none;">
+                                        Mulai Pinjam Barang
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {{ end }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{{ end }}

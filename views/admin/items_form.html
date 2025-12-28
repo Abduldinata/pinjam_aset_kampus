@@ -1,0 +1,63 @@
+{{ define "admin/item_form.html" }}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ if .Item.ID }}Edit Barang{{ else }}Tambah Barang{{ end }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center min-vh-100">
+    
+    <div class="card shadow p-4" style="width: 100%; max-width: 600px;">
+        <h3 class="mb-4 text-center">
+            {{ if .Item.ID }}Edit Barang{{ else }}Tambah Barang Baru{{ end }}
+        </h3>
+        
+        <form action="{{ if .Item.ID }}/admin/items/update{{ else }}/admin/items{{ end }}" method="POST">
+            
+            {{ if .Item.ID }}
+            <input type="hidden" name="id" value="{{ .Item.ID }}">
+            {{ end }}
+
+            <div class="mb-3">
+                <label class="form-label">Nama Barang</label>
+                <input type="text" name="name" class="form-control" required value="{{ .Item.Name }}">
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Kategori</label>
+                    <select name="category" class="form-select">
+                        <option value="Elektronik" {{ if eq .Item.Category "Elektronik" }}selected{{ end }}>Elektronik</option>
+                        <option value="Furniture" {{ if eq .Item.Category "Furniture" }}selected{{ end }}>Furniture</option>
+                        <option value="ATK" {{ if eq .Item.Category "ATK" }}selected{{ end }}>ATK</option>
+                        <option value="Lainnya" {{ if eq .Item.Category "Lainnya" }}selected{{ end }}>Lainnya</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Stok</label>
+                    <input type="number" name="stock" class="form-control" required min="0" value="{{ if .Item.ID }}{{ .Item.Stock }}{{ else }}1{{ end }}">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Lokasi Penyimpanan</label>
+                <input type="text" name="location" class="form-control" value="{{ .Item.Location }}">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Deskripsi</label>
+                <textarea name="description" class="form-control" rows="3">{{ .Item.Description }}</textarea>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="/admin/items" class="btn btn-secondary">Batal</a>
+                <button type="submit" class="btn btn-primary w-50">
+                    {{ if .Item.ID }}Update Barang{{ else }}Simpan Barang{{ end }}
+                </button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
+{{ end }}

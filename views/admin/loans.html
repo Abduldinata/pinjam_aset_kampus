@@ -1,0 +1,98 @@
+{{ define "admin/loans.html" }}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manajemen Peminjaman</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f3f4f6; overflow-x: hidden; }
+        .sidebar { height: 100vh; width: 260px; position: fixed; top: 0; left: 0; background: #1e293b; color: white; padding-top: 20px; z-index: 1000; }
+        .sidebar-header { padding: 0 20px 20px; border-bottom: 1px solid #334155; margin-bottom: 20px; }
+        .sidebar-brand { font-size: 1.5rem; font-weight: bold; color: #3b82f6; text-decoration: none; }
+        .nav-link { color: #cbd5e1; padding: 12px 20px; font-size: 1rem; transition: 0.3s; display: flex; align-items: center; }
+        .nav-link:hover { background: #334155; color: white; }
+        .nav-link.active { background: #2563eb; color: white; border-right: 4px solid #60a5fa; }
+        .nav-link i { width: 25px; margin-right: 10px; text-align: center; }
+        .main-content { margin-left: 260px; padding: 30px; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header"><a href="#" class="sidebar-brand">Admin Panel</a></div>
+        <nav class="nav flex-column">
+            <a href="/admin/dashboard" class="nav-link"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="/admin/items" class="nav-link"><i class="fas fa-box"></i> Data Barang</a>
+            <a href="/admin/loans" class="nav-link active"><i class="fas fa-clipboard-list"></i> Riwayat Peminjaman</a> <a href="/admin/reports" class="nav-link"><i class="fas fa-file-alt"></i> Laporan</a>
+            <a href="/logout" class="nav-link text-danger mt-4"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white py-3">
+                <h4 class="mb-0 fw-bold"><i class="fas fa-clipboard-list me-2 text-primary"></i>Riwayat & Aksi</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Peminjam</th>
+                            <th>Barang</th>
+                            <th>Tgl Pinjam</th>
+                            <th>Batas Kembali</th>
+                            <th>Status</th>
+                            <th>Aksi (Admin)</th> </tr>
+                    </thead>
+                    <tbody>
+                        {{ range .Loans }}
+                        <tr>
+                            <td>
+                                <strong>{{ .User.Name }}</strong><br>
+                                <small class="text-muted">{{ .User.Email }}</small>
+                            </td>
+                            <td>{{ .Item.Name }}</td>
+                            <td>{{ .BorrowDate.Format "02 Jan 06" }}</td>
+                            <td class="{{ if eq .Status "terlambat" }}text-danger fw-bold{{ end }}">
+                                {{ .DueDate.Format "02 Jan 06" }}
+                            </td>
+                            <td>
+                                {{ if eq .Status "dipinjam" }}
+                                    <span class="badge bg-warning text-dark">Dipinjam</span>
+                                {{ else if eq .Status "kembali" }}
+                                    <span class="badge bg-success">Kembali</span>
+                                {{ else }}
+                                    <span class="badge bg-danger">Terlambat</span>
+                                {{ end }}
+                            </td>
+                            <td>
+                                {{ if eq .Status "dipinjam" }}
+                                    <div class="d-flex gap-2">
+                                        <form action="/admin/return" method="POST" onsubmit="return confirm('Terima barang?');">
+                                            <input type="hidden" name="loan_id" value="{{ .ID }}">
+                                            <button type="submit" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-check"></i> Terima
+                                            </button>
+                                        </form>
+                                        <form action="/admin/remind" method="POST">
+                                            <input type="hidden" name="loan_id" value="{{ .ID }}">
+                                            <button type="submit" class="btn btn-sm btn-warning">
+                                                <i class="fas fa-bell"></i> Ingatkan
+                                            </button>
+                                        </form>
+                                    </div>
+                                {{ else }}
+                                    <span class="text-muted small">Selesai</span>
+                                {{ end }}
+                            </td>
+                        </tr>
+                        {{ end }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{{ end }}

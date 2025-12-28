@@ -1,0 +1,114 @@
+{{ define "admin/dashboard.html" }}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f3f4f6; overflow-x: hidden; }
+        
+        /* SIDEBAR STYLE */
+        .sidebar {
+            height: 100vh;
+            width: 260px;
+            position: fixed;
+            top: 0; left: 0;
+            background: #1e293b; /* Navy Dark */
+            color: white;
+            padding-top: 20px;
+            z-index: 1000;
+        }
+        .sidebar-header { padding: 0 20px 20px; border-bottom: 1px solid #334155; margin-bottom: 20px; }
+        .sidebar-brand { font-size: 1.5rem; font-weight: bold; color: #3b82f6; text-decoration: none; }
+        
+        .nav-link { color: #cbd5e1; padding: 12px 20px; font-size: 1rem; transition: 0.3s; display: flex; align-items: center; }
+        .nav-link:hover { background: #334155; color: white; }
+        .nav-link.active { background: #2563eb; color: white; border-right: 4px solid #60a5fa; }
+        .nav-link i { width: 25px; margin-right: 10px; text-align: center; }
+
+        /* MAIN CONTENT STYLE */
+        .main-content { margin-left: 260px; padding: 30px; }
+        .card-stat { border: none; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .card-stat:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-brand"><i class="fas fa-shield-alt me-2"></i>Admin Panel</a>
+        </div>
+        <nav class="nav flex-column">
+            <a href="/admin/dashboard" class="nav-link active">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            
+            <a href="/admin/items" class="nav-link">
+                <i class="fas fa-box"></i> Data Barang
+            </a>
+
+            <a href="/admin/loans" class="nav-link">
+                <i class="fas fa-clipboard-list"></i> Riwayat Peminjaman
+            </a>
+
+            <a href="/admin/reports" class="nav-link">
+                <i class="fas fa-file-alt"></i> Laporan
+            </a>
+            
+            <div class="mt-4 px-3 text-muted small text-uppercase fw-bold">Akun</div>
+            <a href="/logout" class="nav-link text-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <h2 class="fw-bold mb-4">Selamat Datang, Admin!</h2>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card card-stat bg-primary text-white p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="mb-1">Kelola Barang</h4>
+                            <p class="mb-3 opacity-75">Tambah stok atau update aset.</p>
+                            <a href="/admin/items" class="btn btn-light text-primary fw-bold btn-sm">Buka Data Barang</a>
+                        </div>
+                        <i class="fas fa-boxes fa-4x opacity-25"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-stat bg-warning text-dark p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="mb-1">Riwayat & Aksi</h4>
+                            <p class="mb-3 opacity-75">Konfirmasi pengembalian barang.</p>
+                            <a href="/admin/loans" class="btn btn-dark text-warning fw-bold btn-sm">Lihat Riwayat</a>
+                        </div>
+                        <i class="fas fa-clipboard-check fa-4x opacity-25"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-stat bg-success text-white p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="mb-1">Laporan</h4>
+                            <p class="mb-3 opacity-75">Cetak laporan per bulan/user.</p>
+                            <a href="/admin/reports" class="btn btn-light text-success fw-bold btn-sm">Buka Laporan</a>
+                        </div>
+                        <i class="fas fa-chart-line fa-4x opacity-25"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+{{ end }}

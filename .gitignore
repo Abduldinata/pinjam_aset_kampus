@@ -1,0 +1,21 @@
+# Android / Flutter
+.android/
+.avd/
+*.keystore
+*.jks
+*.iml
+
+# SDK & Emulator
+sdk/
+cache/
+*.img
+*.ini
+*.lock
+*.xml
+
+# System
+.DS_Store
+Thumbs.db
+
+# User folder (penting!)
+# C:/Users/  # Commented out to allow tracking files in this project
