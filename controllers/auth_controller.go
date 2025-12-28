@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"net/http"
-	"pinjam_aset_kampus/config"  // SESUAIKAN
-	"pinjam_aset_kampus/models"  // SESUAIKAN
-	"pinjam_aset_kampus/utils"   // SESUAIKAN
+	"pinjam_aset_kampus/config" // SESUAIKAN
+	"pinjam_aset_kampus/models" // SESUAIKAN
+	"pinjam_aset_kampus/utils"  // SESUAIKAN
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
@@ -25,7 +25,7 @@ func Login(c *gin.Context) {
 
 	// Cek apakah email ada di database?
 	if err := config.DB.Where("email = ?", email).First(&user).Error; err != nil {
-		c.HTML(http.StatusUnauthorized, "views/auth/login.html", gin.H{"Error": "Email tidak ditemukan!"})
+		c.HTML(http.StatusUnauthorized, "auth/login.html", gin.H{"Error": "Email tidak ditemukan!"})
 		return
 	}
 
@@ -34,19 +34,19 @@ func Login(c *gin.Context) {
 	// maka logic bcrypt ini akan gagal untuk data dummy lama.
 	// Kita akan perbaiki datanya nanti.
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
-	
+
 	// SEMENTARA: Kalau mau login pakai data dummy yang belum di-hash, buka komentar baris bawah ini:
 	// if user.Password != password { err = 1 } else { err = nil } // HANYA UNTUK TESTING DUMMY
 
 	if err != nil {
-		c.HTML(http.StatusUnauthorized, "views/auth/login.html", gin.H{"Error": "Password salah!"})
+		c.HTML(http.StatusUnauthorized, "auth/login.html", gin.H{"Error": "Password salah!"})
 		return
 	}
 
 	// Generate JWT Token
 	token, err := utils.GenerateToken(user.ID, user.Role)
 	if err != nil {
-		c.HTML(http.StatusInternalServerError, "views/auth/login.html", gin.H{"Error": "Gagal membuat token"})
+		c.HTML(http.StatusInternalServerError, "auth/login.html", gin.H{"Error": "Gagal membuat token"})
 		return
 	}
 
@@ -101,7 +101,7 @@ func Register(c *gin.Context) {
 		Name:     name,
 		Email:    email,
 		Password: string(hashedPassword),
-		Role:     "user", 
+		Role:     "user",
 	}
 
 	if err := config.DB.Create(&newUser).Error; err != nil {

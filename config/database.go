@@ -27,7 +27,7 @@ func ConnectDatabase() {
 	dbPort := os.Getenv("DB_PORT")
 
 	// 3. Susun string koneksi (DSN)
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta", 
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta",
 		dbHost, dbUser, dbPass, dbName, dbPort)
 
 	// 4. Buka koneksi ke PostgreSQL
