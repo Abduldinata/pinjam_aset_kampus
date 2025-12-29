@@ -1,50 +1,195 @@
 {{ define "admin/dashboard.html" }}
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #f3f4f6; overflow-x: hidden; }
-        
-        /* SIDEBAR STYLE */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --secondary-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --secondary-text: #64748b;
+            --primary-color: #2563eb;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --radius-lg: 1rem;
+            --radius-md: 0.75rem;
+        }
+
+        .btn-premium,
+        .btn-primary,
+        .btn-secondary,
+        .btn-success,
+        .btn-warning,
+        .btn-danger {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .btn-hover-effect:hover,
+        .btn-primary:hover,
+        .btn-success:hover,
+        .btn-warning:hover,
+        .btn-danger:hover {
+            transform: scale(1.05) !important;
+            opacity: 0.95;
+            letter-spacing: normal !important;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
         .sidebar {
             height: 100vh;
             width: 260px;
             position: fixed;
-            top: 0; left: 0;
-            background: #1e293b; /* Navy Dark */
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
             color: white;
-            padding-top: 20px;
+            padding: 20px 15px;
             z-index: 1000;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
         }
-        .sidebar-header { padding: 0 20px 20px; border-bottom: 1px solid #334155; margin-bottom: 20px; }
-        .sidebar-brand { font-size: 1.5rem; font-weight: bold; color: #3b82f6; text-decoration: none; }
-        
-        .nav-link { color: #cbd5e1; padding: 12px 20px; font-size: 1rem; transition: 0.3s; display: flex; align-items: center; }
-        .nav-link:hover { background: #334155; color: white; }
-        .nav-link.active { background: #2563eb; color: white; border-right: 4px solid #60a5fa; }
-        .nav-link i { width: 25px; margin-right: 10px; text-align: center; }
 
-        /* MAIN CONTENT STYLE */
-        .main-content { margin-left: 260px; padding: 30px; }
-        .card-stat { border: none; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
-        .card-stat:hover { transform: translateY(-5px); }
+        .sidebar-header {
+            padding: 10px 15px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 25px;
+        }
+
+        .sidebar-brand {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #3b82f6;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar .nav-link {
+            color: #94a3b8;
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid transparent;
+        }
+
+        .sidebar .nav-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            transform: translateX(5px);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-link.active {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            font-weight: 600;
+            border: none;
+        }
+
+        .sidebar .nav-link i {
+            font-size: 1.1rem;
+            width: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .sidebar .nav-link.text-danger {
+            margin-top: auto;
+            color: #fca5a5 !important;
+            border: 1px solid transparent;
+        }
+
+        .sidebar .nav-link.text-danger:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171 !important;
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
+            min-height: 100vh;
+        }
+
+        .card-stat {
+            border: none;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card-stat:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .bg-gradient-primary {
+            background: var(--primary-gradient);
+        }
+
+        .bg-gradient-warning {
+            background: var(--warning-gradient);
+        }
+
+        .bg-gradient-success {
+            background: var(--success-gradient);
+        }
     </style>
 </head>
+
 <body>
 
     <div class="sidebar">
         <div class="sidebar-header">
-            <a href="#" class="sidebar-brand"><i class="fas fa-shield-alt me-2"></i>Admin Panel</a>
+            <a href="/admin/dashboard" class="sidebar-brand">
+                <div class="bg-primary rounded-3 d-flex align-items-center justify-content-center me-2"
+                    style="width: 35px; height: 35px;">
+                    <i class="fas fa-shield-alt text-white" style="font-size: 1.1rem;"></i>
+                </div>
+                <span>Admin Panel</span>
+            </a>
         </div>
-        <nav class="nav flex-column">
+        <div class="px-3 mb-4">
+            <div class="d-flex align-items-center p-3 bg-white bg-opacity-10 rounded-3">
+                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 40px; height: 40px;">
+                    <span class="fw-bold text-white small">{{ slice .UserName 0 1 }}</span>
+                </div>
+                <div class="ms-3 overflow-hidden">
+                    <div class="fw-bold text-white text-truncate small">{{ .UserName }}</div>
+                    <div class="text-primary smaller" style="font-size: 0.7rem;">Administrator</div>
+                </div>
+            </div>
+        </div>
+        <nav class="nav flex-column flex-grow-1">
             <a href="/admin/dashboard" class="nav-link active">
                 <i class="fas fa-home"></i> Dashboard
             </a>
-            
+
             <a href="/admin/items" class="nav-link">
                 <i class="fas fa-box"></i> Data Barang
             </a>
@@ -56,11 +201,13 @@
             <a href="/admin/reports" class="nav-link">
                 <i class="fas fa-file-alt"></i> Laporan
             </a>
-            
-            <div class="mt-4 px-3 text-muted small text-uppercase fw-bold">Akun</div>
-            <a href="/logout" class="nav-link text-danger">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
+
+            <div class="mt-auto pb-3">
+                <div class="px-3 text-muted small text-uppercase fw-bold mb-2">Akun</div>
+                <a href="/logout" class="nav-link text-danger">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
         </nav>
     </div>
 
@@ -69,12 +216,13 @@
 
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="card card-stat bg-primary text-white p-4 h-100">
+                <div class="card card-stat bg-gradient-primary text-white p-4 h-100">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h4 class="mb-1">Kelola Barang</h4>
                             <p class="mb-3 opacity-75">Tambah stok atau update aset.</p>
-                            <a href="/admin/items" class="btn btn-light text-primary fw-bold btn-sm">Buka Data Barang</a>
+                            <a href="/admin/items" class="btn btn-light text-primary fw-bold btn-sm">Buka Data
+                                Barang</a>
                         </div>
                         <i class="fas fa-boxes fa-4x opacity-25"></i>
                     </div>
@@ -82,12 +230,12 @@
             </div>
 
             <div class="col-md-4">
-                <div class="card card-stat bg-warning text-dark p-4 h-100">
+                <div class="card card-stat bg-gradient-warning text-white p-4 h-100">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h4 class="mb-1">Riwayat & Aksi</h4>
                             <p class="mb-3 opacity-75">Konfirmasi pengembalian barang.</p>
-                            <a href="/admin/loans" class="btn btn-dark text-warning fw-bold btn-sm">Lihat Riwayat</a>
+                            <a href="/admin/loans" class="btn btn-light text-warning fw-bold btn-sm">Lihat Riwayat</a>
                         </div>
                         <i class="fas fa-clipboard-check fa-4x opacity-25"></i>
                     </div>
@@ -95,7 +243,7 @@
             </div>
 
             <div class="col-md-4">
-                <div class="card card-stat bg-success text-white p-4 h-100">
+                <div class="card card-stat bg-gradient-success text-white p-4 h-100">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h4 class="mb-1">Laporan</h4>
@@ -110,5 +258,6 @@
     </div>
 
 </body>
+
 </html>
 {{ end }}
