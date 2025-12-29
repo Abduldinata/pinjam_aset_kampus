@@ -1,6 +1,7 @@
 {{ define "auth/register.html" }}
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,7 @@
             --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
             --secondary-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
             --bg-pattern: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                          radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
         }
 
         * {
@@ -38,9 +39,17 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         body::before {
@@ -48,7 +57,7 @@
             position: absolute;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
             border-radius: 50%;
             top: -250px;
             left: -250px;
@@ -60,7 +69,7 @@
             position: absolute;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
             border-radius: 50%;
             bottom: -200px;
             right: -200px;
@@ -68,8 +77,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(50px, 50px) scale(1.1); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(50px, 50px) scale(1.1);
+            }
         }
 
         /* Floating cute icons */
@@ -144,15 +160,20 @@
         }
 
         @keyframes floatAround {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translate(0, 0) rotate(0deg) scale(1);
             }
+
             25% {
                 transform: translate(30px, -20px) rotate(90deg) scale(1.1);
             }
+
             50% {
                 transform: translate(-20px, -40px) rotate(180deg) scale(0.9);
             }
+
             75% {
                 transform: translate(-30px, 20px) rotate(270deg) scale(1.05);
             }
@@ -175,18 +196,66 @@
             animation: twinkle 3s ease-in-out infinite;
         }
 
-        .particle:nth-child(1) { top: 15%; left: 25%; animation-delay: 0s; }
-        .particle:nth-child(2) { top: 35%; left: 75%; animation-delay: 1s; }
-        .particle:nth-child(3) { top: 55%; left: 15%; animation-delay: 2s; }
-        .particle:nth-child(4) { top: 75%; left: 85%; animation-delay: 0.5s; }
-        .particle:nth-child(5) { top: 25%; left: 65%; animation-delay: 1.5s; }
-        .particle:nth-child(6) { top: 45%; left: 35%; animation-delay: 2.5s; }
-        .particle:nth-child(7) { top: 65%; left: 55%; animation-delay: 0.8s; }
-        .particle:nth-child(8) { top: 85%; left: 45%; animation-delay: 1.2s; }
+        .particle:nth-child(1) {
+            top: 15%;
+            left: 25%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            top: 35%;
+            left: 75%;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(3) {
+            top: 55%;
+            left: 15%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(4) {
+            top: 75%;
+            left: 85%;
+            animation-delay: 0.5s;
+        }
+
+        .particle:nth-child(5) {
+            top: 25%;
+            left: 65%;
+            animation-delay: 1.5s;
+        }
+
+        .particle:nth-child(6) {
+            top: 45%;
+            left: 35%;
+            animation-delay: 2.5s;
+        }
+
+        .particle:nth-child(7) {
+            top: 65%;
+            left: 55%;
+            animation-delay: 0.8s;
+        }
+
+        .particle:nth-child(8) {
+            top: 85%;
+            left: 45%;
+            animation-delay: 1.2s;
+        }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.5); }
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
         }
 
         /* Geometric floating shapes */
@@ -225,16 +294,50 @@
             border-bottom: 14px solid rgba(255, 255, 255, 0.3);
         }
 
-        .shape:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
-        .shape:nth-child(2) { top: 30%; right: 20%; animation-delay: 7s; }
-        .shape:nth-child(3) { bottom: 40%; left: 30%; animation-delay: 14s; }
-        .shape:nth-child(4) { top: 50%; right: 40%; animation-delay: 21s; }
-        .shape:nth-child(5) { bottom: 20%; left: 60%; animation-delay: 28s; }
-        .shape:nth-child(6) { top: 70%; right: 70%; animation-delay: 35s; }
+        .shape:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            top: 30%;
+            right: 20%;
+            animation-delay: 7s;
+        }
+
+        .shape:nth-child(3) {
+            bottom: 40%;
+            left: 30%;
+            animation-delay: 14s;
+        }
+
+        .shape:nth-child(4) {
+            top: 50%;
+            right: 40%;
+            animation-delay: 21s;
+        }
+
+        .shape:nth-child(5) {
+            bottom: 20%;
+            left: 60%;
+            animation-delay: 28s;
+        }
+
+        .shape:nth-child(6) {
+            top: 70%;
+            right: 70%;
+            animation-delay: 35s;
+        }
 
         @keyframes shapeFloat {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-100vh) rotate(360deg); }
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
         }
 
         .login-container {
@@ -248,7 +351,8 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 24px;
-            padding: 3rem 2.5rem;
+            padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+            margin-bottom: 1.5rem;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.2);
             animation: slideUp 0.6s ease-out;
@@ -259,6 +363,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -284,8 +389,15 @@
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         .logo-icon i {
@@ -371,7 +483,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: left 0.5s;
         }
 
@@ -397,9 +509,19 @@
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
         }
 
         .alert-danger {
@@ -421,8 +543,15 @@
         }
 
         @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         /* Password Toggle */
@@ -462,119 +591,126 @@
         }
     </style>
 </head>
+
 <body>
 
-<!-- Floating cute icons background -->
-<div class="floating-icons">
-    <i class="fas fa-star floating-icon"></i>
-    <i class="fas fa-heart floating-icon"></i>
-    <i class="fas fa-moon floating-icon"></i>
-    <i class="fas fa-cloud floating-icon"></i>
-    <i class="fas fa-sun floating-icon"></i>
-    <i class="fas fa-snowflake floating-icon"></i>
-    <i class="fas fa-leaf floating-icon"></i>
-    <i class="fas fa-magic floating-icon"></i>
-</div>
+    <!-- Floating cute icons background -->
+    <div class="floating-icons">
+        <i class="fas fa-star floating-icon"></i>
+        <i class="fas fa-heart floating-icon"></i>
+        <i class="fas fa-moon floating-icon"></i>
+        <i class="fas fa-cloud floating-icon"></i>
+        <i class="fas fa-sun floating-icon"></i>
+        <i class="fas fa-snowflake floating-icon"></i>
+        <i class="fas fa-leaf floating-icon"></i>
+        <i class="fas fa-magic floating-icon"></i>
+    </div>
 
-<!-- Twinkling particles -->
-<div class="particles">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-</div>
+    <!-- Twinkling particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
-<!-- Floating geometric shapes -->
-<div class="shapes">
-    <div class="shape circle"></div>
-    <div class="shape square"></div>
-    <div class="shape triangle"></div>
-    <div class="shape circle"></div>
-    <div class="shape square"></div>
-    <div class="shape triangle"></div>
-</div>
+    <!-- Floating geometric shapes -->
+    <div class="shapes">
+        <div class="shape circle"></div>
+        <div class="shape square"></div>
+        <div class="shape triangle"></div>
+        <div class="shape circle"></div>
+        <div class="shape square"></div>
+        <div class="shape triangle"></div>
+    </div>
 
-<div class="login-container">
-    <div class="login-card">
-        <div class="logo-section">
-            <div class="logo-icon">
-                <i class="fas fa-user-plus"></i>
-            </div>
-            <h1 class="login-title">Daftar Akun Baru</h1>
-            <p class="login-subtitle">Bergabunglah dengan sistem peminjaman aset kampus</p>
-        </div>
-
-        {{ if .Error }}
-        <div class="alert alert-danger">
-            <i class="fas fa-exclamation-circle me-2"></i>{{ .Error }}
-        </div>
-        {{ end }}
-
-        <form action="/register" method="POST">
-            <div class="mb-3">
-                <label class="form-label">Nama Lengkap</label>
-                <div class="input-group-custom">
-                    <i class="fas fa-user input-icon"></i>
-                    <input type="text" name="name" class="form-control" required
-                           placeholder="Budi Santoso" autocomplete="name">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-user-plus"></i>
                 </div>
+                <h1 class="login-title">Daftar Akun Baru</h1>
+                <p class="login-subtitle">Bergabunglah dengan sistem peminjaman aset kampus</p>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <div class="input-group-custom">
-                    <i class="fas fa-envelope input-icon"></i>
-                    <input type="email" name="email" class="form-control" required
-                           placeholder="budi@mhs.ac.id" autocomplete="email">
+            {{ if .Error }}
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle me-2"></i>{{ .Error }}
+            </div>
+            {{ end }}
+
+            <form action="/register" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Nama Lengkap</label>
+                    <div class="input-group-custom">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" name="name" class="form-control" required placeholder="Budi Santoso"
+                            autocomplete="name">
+                    </div>
                 </div>
-            </div>
 
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <div class="input-group-custom">
-                    <i class="fas fa-lock input-icon"></i>
-                    <input type="password" name="password" id="passwordInput" class="form-control" required
-                           placeholder="Minimal 6 karakter" autocomplete="new-password">
-                    <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <div class="input-group-custom">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" name="email" class="form-control" required placeholder="budi@mhs.ac.id"
+                            autocomplete="email">
+                    </div>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <div class="input-group-custom">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" name="password" id="passwordInput" class="form-control" required
+                            placeholder="Minimal 6 karakter" autocomplete="new-password">
+                        <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-register">
+                    <i class="fas fa-user-plus me-2"></i>Daftar Sekarang
+                </button>
+            </form>
+
+            <div class="footer-text">
+                <small>
+                    Sudah punya akun? <a href="/login"
+                        style="color: #3b82f6; text-decoration: none; font-weight: 600;">Login di sini</a>
+                </small>
+                <br>
+                <small>
+                    Dibuat dengan <i class="fas fa-heart"></i> oleh Tim 3
+                </small>
             </div>
-
-            <button type="submit" class="btn btn-register">
-                <i class="fas fa-user-plus me-2"></i>Daftar Sekarang
-            </button>
-        </form>
-
-        <div class="footer-text">
-            <small>
-                Sudah punya akun? <a href="/login" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Login di sini</a>
-            </small>
         </div>
     </div>
-</div>
 
-<script>
-    // Password Toggle
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('passwordInput');
+    <script>
+        // Password Toggle
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('passwordInput');
 
-    if (togglePassword && passwordInput) {
-        togglePassword.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
 
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
-    }
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
 
-    // Auto-focus first input
-    document.querySelector('input[name="name"]').focus();
-</script>
+        // Auto-focus first input
+        document.querySelector('input[name="name"]').focus();
+    </script>
 
 </body>
+
 </html>
 {{ end }}
