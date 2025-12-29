@@ -663,13 +663,28 @@
                     </div>
                 </div>
             </div>
-            {{ else }}
-            <div class="col-12 text-center py-5">
-                <i class="fas fa-search fa-3x text-muted mb-3"></i>
-                <p class="text-muted">Belum ada barang yang tersedia.</p>
-            </div>
             {{ end }}
         </div>
+
+        <!-- Footer Informasi -->
+        <footer class="mt-5 pt-4 border-top text-center">
+            <div class="row align-items-center g-3">
+                <div class="col-md-6 text-md-start">
+                    <p class="mb-0 text-muted small">
+                        &copy; 2025 <span class="fw-bold text-primary">Tim 3</span> - UAS Cloud Computing.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="d-inline-flex align-items-center gap-3">
+                        <span class="badge bg-light text-muted border px-3 py-2 rounded-pill smaller">v1.2.0</span>
+                        <a href="#" class="text-decoration-none text-muted small hover-primary" data-bs-toggle="modal"
+                            data-bs-target="#aboutModal">
+                            <i class="fas fa-code-branch me-1"></i> Tentang Project
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <div class="modal fade" id="loanModal" tabindex="-1">
@@ -713,6 +728,72 @@
                         <button type="submit" class="btn btn-primary fw-bold px-4">Konfirmasi Pinjam</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tentang Aplikasi -->
+    <div class="modal fade" id="aboutModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 24px;">
+                <div class="modal-body p-0">
+                    <div class="p-4 bg-primary bg-gradient text-white text-center rounded-top-4"
+                        style="border-radius: 24px 24px 0 0;">
+                        <div class="brand-icon bg-white text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-lg"
+                            style="width: 70px; height: 70px;">
+                            <i class="fas fa-university fa-2x"></i>
+                        </div>
+                        <h4 class="fw-bold mb-1">Aset Kampus</h4>
+                        <p class="mb-0 opacity-75 small">Versi 1.2.0 (Stable)</p>
+                    </div>
+                    <div class="p-4">
+                        <div class="mb-4">
+                            <h6 class="fw-bold text-uppercase smaller text-muted mb-3" style="letter-spacing: 1px;">
+                                Project Information</h6>
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-light p-2 rounded-3 me-3 text-primary">
+                                    <i class="fas fa-laptop-code fa-lg"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <p class="mb-0 small text-muted">Aplikasi ini dikembangkan untuk kebutuhan UAS Mata
+                                        Kuliah <span class="fw-bold text-dark">Cloud Computing</span>.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h6 class="fw-bold text-uppercase smaller text-muted mb-3" style="letter-spacing: 1px;">
+                                Developed By</h6>
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <div class="bg-primary-subtle p-2 rounded-circle">
+                                    <i class="fab fa-github text-primary"></i>
+                                </div>
+                                <div class="small">
+                                    <span class="fw-bold">Abduldinata</span>
+                                    <span class="text-muted ms-1">(Team 3 Member - Fix & Improve UI)</span>
+                                    <a href="https://github.com/Abduldinata" target="_blank"
+                                        class="d-block text-decoration-none text-primary smaller">@abduldinata</a>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-dark bg-opacity-10 p-2 rounded-circle">
+                                    <i class="fab fa-github text-dark"></i>
+                                </div>
+                                <div class="small">
+                                    <span class="fw-bold text-muted">Yeflou</span>
+                                    <span class="text-muted ms-1">(Team 3 Leader - Original Owner)</span>
+                                    <a href="https://github.com/Yeflou" target="_blank"
+                                        class="d-block text-decoration-none text-muted smaller opacity-75">@yeflou</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mt-2">
+                            <button type="button" class="btn btn-outline-primary rounded-pill py-2 fw-bold"
+                                data-bs-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
