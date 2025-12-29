@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"pinjam_aset_kampus/config"
+	"pinjam_aset_kampus/models"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -54,12 +56,21 @@ func AuthMiddleware(requiredRole string) gin.HandlerFunc {
 
 		// 5. Cek isi Token & Role
 		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			userRole := claims["role"].(string)
 			userID := claims["user_id"].(float64)
+			userRole := claims["role"].(string)
+
+			// Ambil Nama dari DB untuk memastikan data akurat (Identity Display)
+			// Catatan: Memerlukan import pinjam_aset_kampus/config dan pinjam_aset_kampus/models
+			var user models.User
+			var userName string = "Guest"
+			if err := config.DB.Select("name").First(&user, uint(userID)).Error; err == nil {
+				userName = user.Name
+			}
 
 			// Simpan data user ke context agar bisa dipakai di controller
 			c.Set("user_id", uint(userID))
 			c.Set("role", userRole)
+			c.Set("user_name", userName)
 
 			// Cek apakah Role sesuai (misal: halaman admin cuma boleh admin)
 			if requiredRole != "" && userRole != requiredRole {

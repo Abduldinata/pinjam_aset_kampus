@@ -12,18 +12,22 @@ import (
 // 1. LIHAT SEMUA BARANG (IndexItems)
 func IndexItems(c *gin.Context) {
 	var items []models.Item
-	config.DB.Find(&items)
+	config.DB.Order("id asc").Find(&items)
 
+	userName, _ := c.Get("user_name")
 	c.HTML(http.StatusOK, "admin/items.html", gin.H{
-		"Items": items,
+		"UserName": userName,
+		"Items":    items,
 	})
 }
 
 // 2. TAMPILKAN FORM TAMBAH (CreateItem)
 func CreateItem(c *gin.Context) {
+	userName, _ := c.Get("user_name")
 	// Kirim data kosong agar template tidak error saat cek .Item.ID
 	c.HTML(http.StatusOK, "admin/item_form.html", gin.H{
-		"Item": models.Item{}, 
+		"UserName": userName,
+		"Item":     models.Item{},
 	})
 }
 
@@ -63,15 +67,17 @@ func EditItem(c *gin.Context) {
 		return
 	}
 
+	userName, _ := c.Get("user_name")
 	c.HTML(http.StatusOK, "admin/item_form.html", gin.H{
-		"Item": item, // Kirim data lama untuk di-edit
+		"UserName": userName,
+		"Item":     item, // Kirim data lama untuk di-edit
 	})
 }
 
 // 5. PROSES UPDATE (UpdateItem)
 func UpdateItem(c *gin.Context) {
 	id := c.PostForm("id")
-	
+
 	var item models.Item
 	if err := config.DB.First(&item, id).Error; err != nil {
 		c.String(http.StatusNotFound, "Barang tidak ditemukan")
@@ -83,7 +89,7 @@ func UpdateItem(c *gin.Context) {
 	item.Category = c.PostForm("category")
 	item.Location = c.PostForm("location")
 	item.Description = c.PostForm("description")
-	
+
 	stockStr := c.PostForm("stock")
 	item.Stock, _ = strconv.Atoi(stockStr)
 

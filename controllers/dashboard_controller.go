@@ -10,9 +10,11 @@ import (
 
 // Dashboard Admin
 func DashboardAdmin(c *gin.Context) {
+	userName, _ := c.Get("user_name")
 	c.HTML(http.StatusOK, "admin/dashboard.html", gin.H{
-		"Title": "Dashboard Admin",
-		"Role":  "Admin",
+		"Title":    "Dashboard Admin",
+		"Role":     "Admin",
+		"UserName": userName,
 	})
 }
 
@@ -28,7 +30,11 @@ func DashboardUser(c *gin.Context) {
 
 	// 2. Ambil Barang
 	var items []models.Item
-	config.DB.Where("stock > ?", 0).Find(&items)
+	config.DB.Where("stock > ?", 0).Order("id asc").Find(&items)
+
+	// --- OTOMATIS CEK DENDA ---
+	CheckAndCreateLateNotifications(userID.(uint))
+	// --------------------------
 
 	// 3. Ambil Notifikasi
 	var notifs []models.Notification
@@ -45,12 +51,24 @@ func DashboardUser(c *gin.Context) {
 		}
 	}
 
-	// 5. KIRIM DATA KE HTML (INI BAGIAN KRUSIAL)
+	// 5. Cek Blokir Pinjaman (Aturan Baru: Lebih Longgar)
+	isBlocked, blockReason := IsUserBlocked(userID.(uint))
+
+	// 5b. Cek apakah punya denda belum lunas (Hanya untuk peringatan, tidak blokir)
+	var unpaidLoan models.Loan
+	hasUnpaidFine := config.DB.Where("user_id = ? AND fine_amount > 0 AND is_fine_paid = ?", userID, false).First(&unpaidLoan).Error == nil
+
+	// 6. KIRIM DATA KE HTML
+	userName, _ := c.Get("user_name")
 	c.HTML(http.StatusOK, "user/dashboard.html", gin.H{
-		"Title":       "Dashboard Mahasiswa",
-		"Role":        role,
-		"Items":       items,
-		"Notifs":      notifs,
-		"UnreadCount": unreadCount, // <--- PASTIIN INI ADA!
+		"Title":         "Dashboard Mahasiswa",
+		"Role":          role,
+		"UserName":      userName,
+		"Items":         items,
+		"Notifs":        notifs,
+		"UnreadCount":   unreadCount,
+		"IsBlocked":     isBlocked,
+		"BlockReason":   blockReason,
+		"HasUnpaidFine": hasUnpaidFine,
 	})
 }

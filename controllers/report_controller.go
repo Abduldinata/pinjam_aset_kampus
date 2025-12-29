@@ -13,8 +13,10 @@ func IndexLoans(c *gin.Context) {
 	var loans []models.Loan
 	config.DB.Preload("User").Preload("Item").Order("created_at desc").Find(&loans)
 
+	userName, _ := c.Get("user_name")
 	c.HTML(http.StatusOK, "admin/loans.html", gin.H{
-		"Loans": loans,
+		"UserName": userName,
+		"Loans":    loans,
 	})
 }
 
@@ -44,7 +46,9 @@ func IndexReports(c *gin.Context) {
 	// Ambil data user untuk dropdown filter
 	config.DB.Where("role = ?", "user").Find(&users)
 
+	userName, _ := c.Get("user_name")
 	c.HTML(http.StatusOK, "admin/reports.html", gin.H{
+		"UserName":      userName,
 		"Loans":         loans,
 		"Users":         users,
 		"SelectedUser":  userID,
