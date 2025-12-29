@@ -36,8 +36,8 @@ func main() {
 	r.GET("/login", controllers.ShowLoginPage)
 	r.POST("/login", controllers.Login)
 
-	r.GET("/register", controllers.ShowRegisterPage)
-	r.POST("/register", controllers.Register)
+	// r.GET("/register", controllers.ShowRegisterPage)
+	// r.POST("/register", controllers.Register)
 
 	r.GET("/logout", controllers.Logout)
 
