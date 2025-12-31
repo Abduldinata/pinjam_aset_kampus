@@ -26,7 +26,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
             min-height: 100vh;
@@ -345,14 +345,111 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 450px;
+            max-width: 1100px;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+            min-height: 600px;
+        }
+
+        .login-info-panel {
+            width: 550px;
+            color: white;
+        }
+
+        .login-form-wrapper {
+            width: 420px;
+        }
+
+        @media (max-width: 992px) {
+            .login-info-panel {
+                width: 400px;
+            }
+            
+            .login-form-wrapper {
+                width: 380px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                min-height: auto;
+            }
+            
+            .login-info-panel {
+                width: 100%;
+                max-width: 420px;
+            }
+            
+            .login-form-wrapper {
+                width: 100%;
+                max-width: 420px;
+            }
+        }
+
+        .info-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            line-height: 1.2;
+        }
+
+        .info-subtitle {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(10px);
+        }
+
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .feature-icon i {
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .feature-desc {
+            opacity: 0.9;
+            font-size: 0.85rem;
+            line-height: 1.4;
         }
 
         .login-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            padding: 2rem 2rem;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.2);
             animation: slideUp 0.6s ease-out;
@@ -372,18 +469,18 @@
 
         .logo-section {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .logo-icon {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             background: var(--primary-gradient);
-            border-radius: 20px;
+            border-radius: 16px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
             animation: bounce 2s ease-in-out infinite;
         }
@@ -628,7 +725,39 @@
         <div class="shape triangle"></div>
     </div>
 
-    <div class="login-container">
+    <div class="login-container" id="loginContainer">
+        <!-- Info Panel (Left Side) -->
+        <div class="login-info-panel" id="infoPanelContent">
+            <h1 class="info-title">Sistem Peminjaman<br>Aset Kampus</h1>
+            <p class="info-subtitle">Kelola peminjaman barang kampus dengan mudah, cepat, dan efisien</p>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3 class="feature-title">Peminjaman Real-time</h3>
+                <p class="feature-desc">Ajukan peminjaman kapan saja dan pantau status secara langsung</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Aman & Terpercaya</h3>
+                <p class="feature-desc">Data Anda terlindungi dengan sistem keamanan berlapis</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="feature-title">Laporan Lengkap</h3>
+                <p class="feature-desc">Akses riwayat dan laporan peminjaman dengan detail</p>
+            </div>
+        </div>
+
+        <!-- Login Form (Right Side) -->
+        <div class="login-form-wrapper">
         <div class="login-card">
             <div class="logo-section">
                 <div class="logo-icon">
@@ -678,6 +807,7 @@
                     Dibuat dengan <i class="fas fa-heart"></i> oleh Tim 3
                 </small>
             </div>
+        </div>
         </div>
     </div>
 
