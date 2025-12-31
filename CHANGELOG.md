@@ -2,6 +2,30 @@
 
 Riwayat pemeliharaan dan perubahan fitur utama pada aplikasi Pinjam Aset Kampus.
 
+## [1.3.0] - 2025-12-31
+### Added
+- **Admin Welcome Banner**: Penambahan welcome banner animasi dengan gradient biru di dashboard admin, menampilkan greeting personal dan real-time clock dalam bahasa Indonesia.
+- **Login Info Panel**: Implementasi side-by-side layout pada halaman login dengan info panel (kiri) berisi 3 feature cards dan login form (kanan).
+- **User Profile Card**: Penambahan user profile card dengan avatar gradient di semua halaman admin (dashboard, items, loans, reports).
+- **About Modal Enhancement**: Link eksternal ke CHANGELOG.md di GitHub pada modal "Tentang Project" untuk akses mudah ke riwayat perubahan.
+
+### Changed
+- **Light Theme Migration**: Perubahan tema sidebar admin dari dark (#0f172a → #1e293b) ke light gradient (#f0f4f8 → #e8eef5) untuk kenyamanan mata.
+- **Login Background**: Update gradient background login dari purple (#667eea → #764ba2) ke blue (#3b82f6 → #2563eb) untuk konsistensi tema.
+- **Admin Headers**: Standardisasi header di halaman Data Barang, Riwayat Peminjaman, dan Laporan dengan title + subtitle deskriptif.
+- **Modal Design**: Update modal "Tentang Aplikasi" dengan gradient biru, icon boxes, dan versi 1.3.0 di semua halaman admin.
+
+### Improved
+- **Dashboard Cards Styling**: Enhancement styling card statistik dengan decorative circles, smooth hover effects, dan gradient colors yang konsisten.
+- **Nav Links Colors**: Optimasi warna nav-link dari #94a3b8 ke #64748b dengan hover state rgba(37, 99, 235, 0.1) untuk kontras lebih baik.
+- **Responsive Design**: Perbaikan responsivitas login page untuk tablet dan mobile devices.
+- **Card Sizes**: Pengurangan ukuran logo (70px → 60px) dan padding card (3rem → 2rem) untuk tampilan lebih compact.
+- **Tech Stack Info**: Penambahan informasi teknologi (Go Gin Framework & PostgreSQL) pada modal project information.
+
+### Fixed
+- **Logout Button Styling**: Perbaikan warna logout button dari #fca5a5 ke #dc2626 dengan hover effect yang lebih jelas.
+- **Border Colors**: Update border dari rgba(255,255,255,0.05) ke rgba(37,99,235,0.1) untuk visibility lebih baik pada light theme.
+
 ## [1.2.0] - 2025-12-29
 ### Added
 - **Premium Unified History List**: Overhaul tampilan riwayat peminjaman mahasiswa menjadi daftar tunggal mewah dengan efek hover baris dan icon dinamis.
