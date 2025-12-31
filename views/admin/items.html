@@ -196,7 +196,7 @@
         }
 
         .btn-premium-warning:hover {
-            transform: translateY(-2px) scale(1.1);
+            transform: translateY(-2px) scale(1.02);
             background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
             box-shadow: 0 8px 15px rgba(245, 158, 11, 0.3);
             color: white !important;
@@ -216,7 +216,7 @@
         }
 
         .btn-premium-danger:hover {
-            transform: translateY(-2px) scale(1.1);
+            transform: translateY(-2px) scale(1.02);
             background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
             box-shadow: 0 8px 15px rgba(239, 68, 68, 0.3);
             color: white !important;
@@ -333,6 +333,7 @@
                             <th>Kategori</th>
                             <th>Stok</th>
                             <th>Lokasi</th>
+                            <th>Deskripsi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -348,6 +349,9 @@
                                 {{ else }} <span class="badge bg-success">{{ .Stock }} unit</span> {{ end }}
                             </td>
                             <td>{{ .Location }}</td>
+                            <td class="text-muted smaller text-truncate" style="max-width: 220px;">
+                                {{ .Description }}
+                            </td>
                             <td>
                                 <div class="d-flex gap-2">
                                     <a href="/admin/items/edit?id={{ .ID }}" class="btn btn-premium-warning btn-sm">
