@@ -22,10 +22,38 @@
         }
 
         body {
-            background-color: var(--bg-body);
+            background: linear-gradient(135deg, #ebf4ff 0%, #e0f2fe 50%, #f0f9ff 100%);
             font-family: 'Inter', sans-serif;
             color: #1e293b;
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
         }
 
         /* Premium Top Navbar */
@@ -36,6 +64,8 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
             padding: 0.85rem 0;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+            position: relative;
+            z-index: 1000;
         }
 
         .navbar-brand {
@@ -115,6 +145,11 @@
         .dropdown-item.text-danger:active,
         .dropdown-item.text-danger:focus {
             background-color: #fee2e2 !important;
+            color: #dc2626 !important;
+        }
+
+        .dropdown-item.text-danger:hover {
+            background-color: #fef2f2 !important;
             color: #dc2626 !important;
         }
 
