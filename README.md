@@ -26,7 +26,7 @@ Aplikasi Peminjaman Aset Kampus berbasis Web yang dibangun menggunakan **Golang 
 
 1. **Clone Repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Abduldinata/pinjam_aset_kampus
    cd pinjam_aset_kampus
    ```
 
