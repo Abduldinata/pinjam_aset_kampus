@@ -56,8 +56,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-            color: white;
+            background: linear-gradient(180deg, #f0f4f8 0%, #e8eef5 100%);
+            color: #1e293b;
             padding: 20px 15px;
             z-index: 1000;
             box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
@@ -67,7 +67,7 @@
 
         .sidebar-header {
             padding: 10px 15px 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
             margin-bottom: 25px;
         }
 
@@ -82,7 +82,7 @@
         }
 
         .sidebar .nav-link {
-            color: #94a3b8;
+            color: #64748b;
             padding: 12px 18px;
             font-size: 0.9rem;
             font-weight: 500;
@@ -96,10 +96,10 @@
         }
 
         .sidebar .nav-link:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
+            background: rgba(37, 99, 235, 0.1);
+            color: #2563eb;
             transform: translateX(5px);
-            border-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(37, 99, 235, 0.2);
         }
 
         .sidebar .nav-link.active {
@@ -119,14 +119,127 @@
 
         .sidebar .nav-link.text-danger {
             margin-top: auto;
-            color: #fca5a5 !important;
+            color: #dc2626 !important;
             border: 1px solid transparent;
         }
 
         .sidebar .nav-link.text-danger:hover {
-            background: rgba(239, 68, 68, 0.1);
-            color: #f87171 !important;
-            border-color: rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, 0.15);
+            color: #b91c1c !important;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .user-profile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-right: 12px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .user-info h6 {
+            margin: 0;
+            color: #1e293b;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .user-info small {
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .welcome-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-banner h2 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .welcome-banner p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+
+        .welcome-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .welcome-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .time-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
         }
 
         .main-content {
@@ -139,26 +252,54 @@
 
         .card-stat {
             border: none;
-            border-radius: 15px;
-            box-shadow: var(--shadow-md);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-stat::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
         }
 
         .card-stat:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-stat .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-stat .card-icon {
+            opacity: 0.2;
+            transition: all 0.3s;
+        }
+
+        .card-stat:hover .card-icon {
+            opacity: 0.3;
+            transform: scale(1.1);
         }
 
         .bg-gradient-primary {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         }
 
         .bg-gradient-warning {
-            background: var(--warning-gradient);
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
         }
 
         .bg-gradient-success {
-            background: var(--success-gradient);
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         }
     </style>
 </head>
@@ -175,18 +316,20 @@
                 <span>Admin Panel</span>
             </a>
         </div>
-        <div class="px-3 mb-4">
-            <div class="d-flex align-items-center p-3 bg-white bg-opacity-10 rounded-3">
-                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
-                    style="width: 40px; height: 40px;">
-                    <span class="fw-bold text-white small">{{ slice .UserName 0 1 }}</span>
+        
+        <!-- User Profile Card -->
+        <div class="user-profile-card">
+            <div class="d-flex align-items-center">
+                <div class="user-avatar">
+                    {{ slice .UserName 0 1 }}
                 </div>
-                <div class="ms-3 overflow-hidden">
-                    <div class="fw-bold text-white text-truncate small">{{ .UserName }}</div>
-                    <div class="text-primary smaller" style="font-size: 0.7rem;">Administrator</div>
+                <div class="user-info flex-grow-1 overflow-hidden">
+                    <h6 class="text-truncate">{{ .UserName }}</h6>
+                    <small>Administrator</small>
                 </div>
             </div>
         </div>
+
         <nav class="nav flex-column flex-grow-1">
             <a href="/admin/dashboard" class="nav-link active">
                 <i class="fas fa-home"></i> Dashboard
@@ -215,47 +358,67 @@
 
     <div class="main-content">
         <div class="flex-grow-1">
-            <h2 class="fw-bold mb-4">Selamat Datang, Admin!</h2>
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <div class="welcome-content">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2>Selamat Datang, {{ .UserName }}! 👋</h2>
+                            <p>Kelola sistem peminjaman aset kampus dengan mudah dan efisien</p>
+                            <div class="time-badge">
+                                <i class="far fa-clock me-2"></i>
+                                <span id="currentTime"></span>
+                            </div>
+                        </div>
+                        <div class="welcome-icon d-none d-md-flex">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="card card-stat bg-gradient-primary text-white p-4 h-100">
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center card-content">
                             <div>
-                                <h4 class="mb-1">Kelola Barang</h4>
-                                <p class="mb-3 opacity-75">Tambah stok atau update aset.</p>
-                                <a href="/admin/items" class="btn btn-light text-primary fw-bold btn-sm">Buka Data
-                                    Barang</a>
+                                <h4 class="mb-2">Kelola Barang</h4>
+                                <p class="mb-3 opacity-90">Tambah stok atau update aset</p>
+                                <a href="/admin/items" class="btn btn-light text-primary fw-bold btn-sm px-3">
+                                    <i class="fas fa-arrow-right me-2"></i>Buka Data Barang
+                                </a>
                             </div>
-                            <i class="fas fa-boxes fa-4x opacity-25"></i>
+                            <i class="fas fa-boxes fa-4x card-icon"></i>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="card card-stat bg-gradient-warning text-white p-4 h-100">
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center card-content">
                             <div>
-                                <h4 class="mb-1">Riwayat & Aksi</h4>
-                                <p class="mb-3 opacity-75">Konfirmasi pengembalian barang.</p>
-                                <a href="/admin/loans" class="btn btn-light text-warning fw-bold btn-sm">Lihat
-                                    Riwayat</a>
+                                <h4 class="mb-2">Riwayat & Aksi</h4>
+                                <p class="mb-3 opacity-90">Konfirmasi pengembalian barang</p>
+                                <a href="/admin/loans" class="btn btn-light text-warning fw-bold btn-sm px-3">
+                                    <i class="fas fa-arrow-right me-2"></i>Lihat Riwayat
+                                </a>
                             </div>
-                            <i class="fas fa-clipboard-check fa-4x opacity-25"></i>
+                            <i class="fas fa-clipboard-check fa-4x card-icon"></i>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="card card-stat bg-gradient-success text-white p-4 h-100">
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center card-content">
                             <div>
-                                <h4 class="mb-1">Laporan</h4>
-                                <p class="mb-3 opacity-75">Cetak laporan per bulan/user.</p>
-                                <a href="/admin/reports" class="btn btn-light text-success fw-bold btn-sm">Buka
-                                    Laporan</a>
+                                <h4 class="mb-2">Laporan</h4>
+                                <p class="mb-3 opacity-90">Cetak laporan per bulan/user</p>
+                                <a href="/admin/reports" class="btn btn-light text-success fw-bold btn-sm px-3">
+                                    <i class="fas fa-arrow-right me-2"></i>Buka Laporan
+                                </a>
                             </div>
-                            <i class="fas fa-chart-line fa-4x opacity-25"></i>
+                            <i class="fas fa-chart-line fa-4x card-icon"></i>
                         </div>
                     </div>
                 </div>
@@ -350,6 +513,25 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            const timeString = now.toLocaleDateString('id-ID', options);
+            document.getElementById('currentTime').textContent = timeString;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
 </body>
 
 </html>

@@ -55,8 +55,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-            color: white;
+            background: linear-gradient(180deg, #f0f4f8 0%, #e8eef5 100%);
+            color: #1e293b;
             padding: 20px 15px;
             z-index: 1000;
             box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
@@ -66,7 +66,7 @@
 
         .sidebar-header {
             padding: 10px 15px 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
             margin-bottom: 25px;
         }
 
@@ -81,7 +81,7 @@
         }
 
         .sidebar .nav-link {
-            color: #94a3b8;
+            color: #64748b;
             padding: 12px 18px;
             font-size: 0.9rem;
             font-weight: 500;
@@ -95,10 +95,10 @@
         }
 
         .sidebar .nav-link:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
+            background: rgba(37, 99, 235, 0.1);
+            color: #2563eb;
             transform: translateX(5px);
-            border-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(37, 99, 235, 0.2);
         }
 
         .sidebar .nav-link.active {
@@ -118,14 +118,50 @@
 
         .sidebar .nav-link.text-danger {
             margin-top: auto;
-            color: #fca5a5 !important;
+            color: #dc2626 !important;
             border: 1px solid transparent;
         }
 
         .sidebar .nav-link.text-danger:hover {
-            background: rgba(239, 68, 68, 0.1);
-            color: #f87171 !important;
-            border-color: rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, 0.15);
+            color: #b91c1c !important;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .user-profile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-right: 12px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .user-info h6 {
+            margin: 0;
+            color: #1e293b;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .user-info small {
+            color: #64748b;
+            font-size: 0.8rem;
         }
 
         .main-content {
@@ -241,18 +277,20 @@
                 <span>Admin Panel</span>
             </a>
         </div>
-        <div class="px-3 mb-4">
-            <div class="d-flex align-items-center p-3 bg-white bg-opacity-10 rounded-3">
-                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
-                    style="width: 40px; height: 40px;">
-                    <span class="fw-bold text-white small">{{ slice .UserName 0 1 }}</span>
+        
+        <!-- User Profile Card -->
+        <div class="user-profile-card">
+            <div class="d-flex align-items-center">
+                <div class="user-avatar">
+                    {{ slice .UserName 0 1 }}
                 </div>
-                <div class="ms-3 overflow-hidden">
-                    <div class="fw-bold text-white text-truncate small">{{ .UserName }}</div>
-                    <div class="text-primary smaller" style="font-size: 0.7rem;">Administrator</div>
+                <div class="user-info flex-grow-1 overflow-hidden">
+                    <h6 class="text-truncate">{{ .UserName }}</h6>
+                    <small>Administrator</small>
                 </div>
             </div>
         </div>
+
         <nav class="nav flex-column flex-grow-1">
             <a href="/admin/dashboard" class="nav-link">
                 <i class="fas fa-home"></i> Dashboard
@@ -280,8 +318,10 @@
     <div class="main-content">
         <div class="flex-grow-1">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold mb-0">Kelola Barang</h2>
-                <h4 class="mb-0 fw-bold"><i class="fas fa-boxes me-2 text-primary"></i>Daftar Aset Kampus</h4>
+                <div>
+                    <h2 class="fw-bold mb-1">Data Barang</h2>
+                    <p class="text-muted mb-0">Kelola daftar aset kampus yang tersedia</p>
+                </div>
                 <a href="/admin/items/add" class="btn btn-primary"><i class="fas fa-plus me-2"></i>Tambah Barang</a>
             </div>
             <div class="table-responsive">
