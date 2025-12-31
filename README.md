@@ -71,10 +71,22 @@ Aplikasi Peminjaman Aset Kampus berbasis Web yang dibangun menggunakan **Golang 
 
 Proyek ini dilisensikan di bawah **MIT License**. Lihat file [LICENSE](LICENSE) untuk informasi lebih lanjut.
 
-## 👥 Tim Pengembang
-- **Yeflou** - Owner Project & Forked from
-- **Abduldinata** - Lead Maintenance & Modified
-- **Tim 3** - UAS Cloud Computing Project
+## 👥 Development Team
+
+### Developed By
+- **Abduldinata** - Team 3 Member - Fix & Improve UI
+  - GitHub: [@abduldinata](https://github.com/Abduldinata)
+  - Role: Lead Maintenance & Modified
+
+- **Yeflou** - Team 3 Leader - Original Owner
+  - GitHub: [@yeflou](https://github.com/Yeflou)
+  - Role: Owner Project & Forked from
+
+### Team 3 Members - Additional Contributors
+- **Other Team Members**
+  - Role: Report, Documentation, Testing & Quality Assurance
+
+**Project**: Team 3 - Cloud Computing Final Exam
 
 ---
-*Dibuat dengan ❤️ untuk sistem kampus yang lebih baik.*
+*Built with ❤️ for a better campus system.*
