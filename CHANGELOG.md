@@ -8,12 +8,17 @@ Riwayat pemeliharaan dan perubahan fitur utama pada aplikasi Pinjam Aset Kampus.
 - **Login Info Panel**: Implementasi side-by-side layout pada halaman login dengan info panel (kiri) berisi 3 feature cards dan login form (kanan).
 - **User Profile Card**: Penambahan user profile card dengan avatar gradient di semua halaman admin (dashboard, items, loans, reports).
 - **About Modal Enhancement**: Link eksternal ke CHANGELOG.md di GitHub pada modal "Tentang Project" untuk akses mudah ke riwayat perubahan.
+- **Statistics Cards (User History)**: Penambahan 3 cards statistik di halaman riwayat user: Total Riwayat (biru), Dikembalikan (hijau), dan Dipinjam (kuning) dengan icon gradient dan badges.
+- **Search & Filter (User History)**: Implementasi search bar dan dropdown filter status dengan real-time filtering di halaman riwayat peminjaman user.
+- **Gradient Background (User Pages)**: Penambahan gradient background dengan decorative floating circles (biru & ungu) untuk tampilan lebih modern dan dinamis.
 
 ### Changed
 - **Light Theme Migration**: Perubahan tema sidebar admin dari dark (#0f172a → #1e293b) ke light gradient (#f0f4f8 → #e8eef5) untuk kenyamanan mata.
 - **Login Background**: Update gradient background login dari purple (#667eea → #764ba2) ke blue (#3b82f6 → #2563eb) untuk konsistensi tema.
 - **Admin Headers**: Standardisasi header di halaman Data Barang, Riwayat Peminjaman, dan Laporan dengan title + subtitle deskriptif.
-- **Modal Design**: Update modal "Tentang Aplikasi" dengan gradient biru, icon boxes, dan versi 1.3.0 di semua halaman admin.
+- **Modal Design**: Update modal "Tentang Aplikasi" dengan gradient biru, icon boxes, dan versi 1.3.0 di semua halaman admin dan user.
+- **User Header Gradient**: Perubahan header user pages dari dark gradient (#1e293b) ke blue gradient (#3b82f6 → #2563eb) yang matching dengan primary theme.
+- **Background Enhancement**: Update dari solid color (#ebf4ff) ke 3-color gradient dengan floating decorative shapes untuk visual depth.
 
 ### Improved
 - **Dashboard Cards Styling**: Enhancement styling card statistik dengan decorative circles, smooth hover effects, dan gradient colors yang konsisten.
@@ -21,10 +26,14 @@ Riwayat pemeliharaan dan perubahan fitur utama pada aplikasi Pinjam Aset Kampus.
 - **Responsive Design**: Perbaikan responsivitas login page untuk tablet dan mobile devices.
 - **Card Sizes**: Pengurangan ukuran logo (70px → 60px) dan padding card (3rem → 2rem) untuk tampilan lebih compact.
 - **Tech Stack Info**: Penambahan informasi teknologi (Go Gin Framework & PostgreSQL) pada modal project information.
+- **Hover Consistency**: Standardisasi semua hover scale effects di admin pages dari berbagai nilai (1.05, 1.1) ke 1.02 untuk animasi yang lebih smooth dan profesional.
+- **Button Hover Effects**: Unifikasi transform scale pada buttons, badges, action buttons, table rows, KTM links, dan PDF buttons.
 
 ### Fixed
 - **Logout Button Styling**: Perbaikan warna logout button dari #fca5a5 ke #dc2626 dengan hover effect yang lebih jelas.
 - **Border Colors**: Update border dari rgba(255,255,255,0.05) ke rgba(37,99,235,0.1) untuk visibility lebih baik pada light theme.
+- **Logout Hover (User)**: Penambahan hover state merah (#fef2f2 background) untuk dropdown logout button di semua halaman user (dashboard, history, loan form).
+- **Template Error**: Fix template function error dengan mengganti function "add" menjadi JavaScript client-side counting untuk statistics cards.
 
 ## [1.2.0] - 2025-12-29
 ### Added
