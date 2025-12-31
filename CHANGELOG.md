@@ -11,6 +11,7 @@ Riwayat pemeliharaan dan perubahan fitur utama pada aplikasi Pinjam Aset Kampus.
 - **Statistics Cards (User History)**: Penambahan 3 cards statistik di halaman riwayat user: Total Riwayat (biru), Dikembalikan (hijau), dan Dipinjam (kuning) dengan icon gradient dan badges.
 - **Search & Filter (User History)**: Implementasi search bar dan dropdown filter status dengan real-time filtering di halaman riwayat peminjaman user.
 - **Gradient Background (User Pages)**: Penambahan gradient background dengan decorative floating circles (biru & ungu) untuk tampilan lebih modern dan dinamis.
+- **Admin Items Deskripsi**: Kolom deskripsi kini tampil di daftar Data Barang agar detail item terlihat tanpa membuka form.
 
 ### Changed
 - **Light Theme Migration**: Perubahan tema sidebar admin dari dark (#0f172a → #1e293b) ke light gradient (#f0f4f8 → #e8eef5) untuk kenyamanan mata.
@@ -19,6 +20,8 @@ Riwayat pemeliharaan dan perubahan fitur utama pada aplikasi Pinjam Aset Kampus.
 - **Modal Design**: Update modal "Tentang Aplikasi" dengan gradient biru, icon boxes, dan versi 1.3.0 di semua halaman admin dan user.
 - **User Header Gradient**: Perubahan header user pages dari dark gradient (#1e293b) ke blue gradient (#3b82f6 → #2563eb) yang matching dengan primary theme.
 - **Background Enhancement**: Update dari solid color (#ebf4ff) ke 3-color gradient dengan floating decorative shapes untuk visual depth.
+- **Admin Item Form Layout**: Form tambah/edit kini terpusat dengan background putih, badge mode putih, dan tombol kembali dipangkas (hanya Batal di footer).
+- **Loans/Reports Headers**: Judul kartu Riwayat dan Laporan diringkas untuk tampilan lebih sederhana.
 
 ### Improved
 - **Dashboard Cards Styling**: Enhancement styling card statistik dengan decorative circles, smooth hover effects, dan gradient colors yang konsisten.
