@@ -1,0 +1,1550 @@
+{{ define "landing.html" }}
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Datang - Peminjaman Aset Kampus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #0ea5e9;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --muted: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 14px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Background decorative elements */
+        .bg-blur-1 {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -300px;
+            left: -300px;
+            z-index: 0;
+            animation: drift 20s ease-in-out infinite;
+        }
+
+        .bg-blur-2 {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            bottom: -250px;
+            right: -250px;
+            z-index: 0;
+            animation: drift 25s ease-in-out infinite reverse;
+        }
+
+        .bg-shape-1 {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            top: 20%;
+            right: 5%;
+            z-index: 0;
+            animation: morph 15s ease-in-out infinite;
+        }
+
+        .bg-shape-2 {
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.04) 0%, transparent 70%);
+            border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+            bottom: 15%;
+            left: 10%;
+            z-index: 0;
+            animation: morph 20s ease-in-out infinite reverse;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        @keyframes morph {
+            0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; }
+        }
+
+        /* Floating Icons */
+        .floating-icons {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(16, 185, 129, 0.25);
+            animation: floatAround 20s ease-in-out infinite;
+        }
+
+        .floating-icon:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            animation-duration: 25s;
+        }
+
+        .floating-icon:nth-child(2) {
+            top: 15%;
+            right: 8%;
+            animation-delay: 5s;
+            animation-duration: 22s;
+        }
+
+        .floating-icon:nth-child(3) {
+            bottom: 25%;
+            left: 15%;
+            animation-delay: 10s;
+            animation-duration: 28s;
+        }
+
+        .floating-icon:nth-child(4) {
+            top: 50%;
+            right: 12%;
+            animation-delay: 3s;
+            animation-duration: 24s;
+        }
+
+        .floating-icon:nth-child(5) {
+            bottom: 10%;
+            left: 75%;
+            animation-delay: 8s;
+            animation-duration: 26s;
+        }
+
+        .floating-icon:nth-child(6) {
+            top: 35%;
+            left: 2%;
+            animation-delay: 12s;
+            animation-duration: 21s;
+        }
+
+        .floating-icon:nth-child(7) {
+            bottom: 40%;
+            right: 5%;
+            animation-delay: 6s;
+            animation-duration: 23s;
+        }
+
+        .floating-icon:nth-child(8) {
+            top: 70%;
+            left: 50%;
+            animation-delay: 15s;
+            animation-duration: 27s;
+        }
+
+        /* Particles */
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+        }
+
+        .particle:nth-child(1) {
+            top: 12%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            top: 30%;
+            left: 70%;
+            animation-delay: 1s;
+        }
+
+        .particle:nth-child(3) {
+            top: 50%;
+            left: 10%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(4) {
+            top: 70%;
+            left: 80%;
+            animation-delay: 0.5s;
+        }
+
+        .particle:nth-child(5) {
+            top: 20%;
+            left: 60%;
+            animation-delay: 1.5s;
+        }
+
+        .particle:nth-child(6) {
+            top: 40%;
+            left: 30%;
+            animation-delay: 2.5s;
+        }
+
+        .particle:nth-child(7) {
+            top: 60%;
+            left: 50%;
+            animation-delay: 0.8s;
+        }
+
+        .particle:nth-child(8) {
+            top: 80%;
+            left: 40%;
+            animation-delay: 1.2s;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.3);
+            }
+        }
+
+        /* Geometric Shapes */
+        .shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.12;
+            animation: shapeFloat 30s linear infinite;
+        }
+
+        .shape.circle {
+            width: 18px;
+            height: 18px;
+            background: rgba(16, 185, 129, 0.6);
+            border-radius: 50%;
+        }
+
+        .shape.square {
+            width: 14px;
+            height: 14px;
+            background: rgba(16, 185, 129, 0.5);
+            border-radius: 2px;
+        }
+
+        .shape.triangle {
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 12px solid rgba(16, 185, 129, 0.4);
+        }
+
+        .shape:nth-child(1) {
+            top: 5%;
+            left: 8%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            top: 25%;
+            right: 15%;
+            animation-delay: 7s;
+        }
+
+        .shape:nth-child(3) {
+            bottom: 35%;
+            left: 25%;
+            animation-delay: 14s;
+        }
+
+        .shape:nth-child(4) {
+            top: 45%;
+            right: 35%;
+            animation-delay: 21s;
+        }
+
+        .shape:nth-child(5) {
+            bottom: 15%;
+            left: 55%;
+            animation-delay: 28s;
+        }
+
+        .shape:nth-child(6) {
+            top: 65%;
+            right: 65%;
+            animation-delay: 35s;
+        }
+
+        @keyframes shapeFloat {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes floatAround {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translate(25px, -15px) rotate(90deg) scale(1.1);
+            }
+            50% {
+                transform: translate(-15px, -30px) rotate(180deg) scale(0.9);
+            }
+            75% {
+                transform: translate(-25px, 15px) rotate(270deg) scale(1.05);
+            }
+        }
+
+
+        /* Navigation - Clean and Modern */
+        .navbar-main {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(203, 213, 225, 0.3);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .brand-text {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-link {
+            color: var(--muted) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+            margin: 0 2px;
+        }
+
+        .nav-link:hover {
+            color: var(--primary) !important;
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .nav-link.active {
+            color: var(--primary) !important;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .btn-nav {
+            padding: 0.6rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease !important;
+            border: 2px solid transparent;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: var(--primary) !important;
+            border-color: var(--primary);
+        }
+
+        .btn-login:hover {
+            background: rgba(16, 185, 129, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white !important;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+        }
+
+        /* Hero Section - Clean and Spacious */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(203, 213, 225, 0.3);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* Floating Illustration */
+        .hero-illustration {
+            position: relative;
+            height: 380px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .floating-stack {
+            position: relative;
+            width: 380px;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-card {
+            position: absolute;
+            width: 240px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+            border-radius: 18px;
+            padding: 1.75rem;
+            box-shadow: 0 14px 40px rgba(16, 185, 129, 0.16);
+            border: 1px solid rgba(16, 185, 129, 0.16);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            opacity: 0;
+            transform: translate(40px, 20px) scale(0.94);
+            transition: transform 0.35s ease, opacity 0.35s ease, box-shadow 0.35s ease;
+            pointer-events: none;
+        }
+
+        .floating-card.active {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+            z-index: 3;
+            pointer-events: auto;
+            box-shadow: 0 16px 45px rgba(16, 185, 129, 0.2);
+        }
+
+        .floating-card.behind {
+            opacity: 0.5;
+            transform: translate(-24px, 18px) scale(0.96);
+            z-index: 2;
+        }
+
+        .floating-card.hidden-card {
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .floating-value {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            line-height: 1;
+        }
+
+        .floating-label {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .floating-nav {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .floating-nav button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            background: white;
+            color: var(--primary);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.14);
+            transition: all 0.2s ease;
+            pointer-events: auto;
+            margin: 0 -18px;
+        }
+
+        .floating-nav button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
+        }
+
+        .floating-dots {
+            position: absolute;
+            bottom: -32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .floating-dots .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.25);
+            border: none;
+            padding: 0;
+            transition: all 0.2s ease;
+        }
+
+        .floating-dots .dot.active {
+            width: 18px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        /* Button Styles */
+        .btn-hero {
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary-lg {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-primary-lg:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(16, 185, 129, 0.4);
+            color: white;
+        }
+
+        .btn-outline-lg {
+            background: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-lg:hover {
+            background: rgba(16, 185, 129, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Process Section - Clean Steps */
+        .process-section {
+            padding: 6rem 0;
+            background: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid rgba(203, 213, 225, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.1);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--muted);
+            margin-bottom: 0;
+        }
+
+        /* Features Grid - Clean Cards */
+        .features-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            position: relative;
+            z-index: 1;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(203, 213, 225, 0.3);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .cta-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .cta-icon {
+            position: absolute;
+            font-size: 2.5rem;
+            color: rgba(255, 255, 255, 0.15);
+            animation: floatAround 25s ease-in-out infinite;
+        }
+
+        .cta-icon:nth-child(1) {
+            top: 10%;
+            left: 8%;
+            animation-delay: 0s;
+        }
+
+        .cta-icon:nth-child(2) {
+            top: 15%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .cta-icon:nth-child(3) {
+            bottom: 20%;
+            left: 12%;
+            animation-delay: 10s;
+        }
+
+        .cta-icon:nth-child(4) {
+            bottom: 15%;
+            right: 8%;
+            animation-delay: 7s;
+        }
+
+        .cta-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        }
+
+        .cta-particle:nth-child(5) {
+            top: 20%;
+            left: 25%;
+            animation-delay: 0s;
+        }
+
+        .cta-particle:nth-child(6) {
+            top: 40%;
+            right: 20%;
+            animation-delay: 1s;
+        }
+
+        .cta-particle:nth-child(7) {
+            bottom: 30%;
+            left: 40%;
+            animation-delay: 2s;
+        }
+
+        .cta-particle:nth-child(8) {
+            bottom: 25%;
+            right: 30%;
+            animation-delay: 1.5s;
+        }
+
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .cta-description {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-cta {
+            padding: 1.2rem 3rem;
+            background: white;
+            color: var(--primary);
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 0 2rem;
+            background: var(--dark);
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-illustration {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 13px;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .step-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .step-number {
+                margin: 0 auto;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .btn-hero {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+
+            .step-item {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Elements -->
+    <div class="bg-blur-1"></div>
+    <div class="bg-blur-2"></div>
+    <div class="bg-shape-1"></div>
+    <div class="bg-shape-2"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Floating Icons -->
+    <div class="floating-icons">
+        <div class="floating-icon"><i class="fas fa-book"></i></div>
+        <div class="floating-icon"><i class="fas fa-flask"></i></div>
+        <div class="floating-icon"><i class="fas fa-video"></i></div>
+        <div class="floating-icon"><i class="fas fa-laptop"></i></div>
+        <div class="floating-icon"><i class="fas fa-microscope"></i></div>
+        <div class="floating-icon"><i class="fas fa-tools"></i></div>
+        <div class="floating-icon"><i class="fas fa-headphones"></i></div>
+        <div class="floating-icon"><i class="fas fa-camera"></i></div>
+    </div>
+
+    <!-- Particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Geometric Shapes -->
+    <div class="shapes">
+        <div class="shape circle"></div>
+        <div class="shape square"></div>
+        <div class="shape triangle"></div>
+        <div class="shape circle"></div>
+        <div class="shape square"></div>
+        <div class="shape triangle"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-main">
+        <div class="container">
+            <a class="nav-brand" href="#">
+                <div class="brand-icon">
+                    <i class="fas fa-shapes"></i>
+                </div>
+                <span class="brand-text">Peminjaman Aset</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#process">Cara Kerja</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Fitur</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a href="{{ .ctaLogin }}" class="btn btn-login btn-nav">
+                            <i class="fas fa-sign-in-alt me-2"></i>Masuk
+                        </a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a href="{{ .ctaRegister }}" class="btn btn-register btn-nav">
+                            <i class="fas fa-user-plus me-2"></i>Daftar
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            Kelola Peminjaman Aset Kampus dengan Mudah
+                        </h1>
+                        <p class="hero-subtitle">
+                            Sistem modern untuk meminjam buku, alat lab, proyektor, dan aset kampus lainnya
+                        </p>
+                        <p class="hero-description">
+                            Platform terintegrasi yang memudahkan mahasiswa dan staf dalam mengelola 
+                            peminjaman aset. Mulai dari pengajuan, persetujuan, hingga pengembalian - 
+                            semua dalam satu aplikasi yang user-friendly.
+                        </p>
+                        
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="{{ .ctaRegister }}" class="btn btn-primary-lg btn-hero">
+                                <i class="fas fa-user-plus"></i> Mulai Gratis
+                            </a>
+                            <a href="{{ .ctaLogin }}" class="btn btn-outline-lg btn-hero">
+                                <i class="fas fa-sign-in-alt"></i> Masuk Akun
+                            </a>
+                        </div>
+
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">120+</div>
+                                <div class="stat-label">Pengguna Aktif</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">350+</div>
+                                <div class="stat-label">Aset Tersedia</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">Layanan Aktif</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="hero-illustration">
+                        <div class="floating-stack">
+                            <div class="floating-card active" data-index="0">
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="bg-primary rounded-circle p-2 text-white">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 fw-bold">Pengguna Aktif</h6>
+                                        <div class="floating-value">120+</div>
+                                        <small class="floating-label">Civitas kampus</small>
+                                    </div>
+                                </div>
+                                <p class="small mb-0">Mahasiswa dan staf yang rutin meminjam aset setiap minggu.</p>
+                            </div>
+                            <div class="floating-card behind" data-index="1">
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="bg-warning rounded-circle p-2 text-white">
+                                        <i class="fas fa-boxes-stacked"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 fw-bold">Aset Tersedia</h6>
+                                        <div class="floating-value">350+</div>
+                                        <small class="floating-label">Siap dipinjam</small>
+                                    </div>
+                                </div>
+                                <p class="small mb-0">Koleksi lengkap dari buku, alat lab, hingga perangkat multimedia.</p>
+                            </div>
+                            <div class="floating-card hidden-card" data-index="2">
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="bg-success rounded-circle p-2 text-white">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1 fw-bold">Jam Layanan</h6>
+                                        <div class="floating-value">24/7</div>
+                                        <small class="floating-label">Respons cepat</small>
+                                    </div>
+                                </div>
+                                <p class="small mb-0">Pengajuan dan notifikasi diproses cepat setiap saat.</p>
+                            </div>
+
+                            <div class="floating-nav">
+                                <button class="nav-btn" data-dir="prev" aria-label="Sebelumnya">
+                                    <i class="fas fa-arrow-left"></i>
+                                </button>
+                                <button class="nav-btn" data-dir="next" aria-label="Berikutnya">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+
+                            <div class="floating-dots">
+                                <button class="dot active" data-index="0" aria-label="Pengguna Aktif"></button>
+                                <button class="dot" data-index="1" aria-label="Aset Tersedia"></button>
+                                <button class="dot" data-index="2" aria-label="Jam Layanan"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section" id="process">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">CARA KERJA</span>
+                <h2 class="section-title">Proses Peminjaman yang Sederhana</h2>
+                <p class="section-subtitle">
+                    {{ .gracePeriod }} · {{ .fine }} · {{ .blockNotice }}
+                </p>
+            </div>
+
+            <div class="process-steps">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Masuk atau Daftar Akun</h4>
+                        <p>Login dengan akun kampus Anda atau daftar akun baru dalam hitungan menit. Verifikasi email diperlukan untuk keamanan.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Telusuri dan Pilih Aset</h4>
+                        <p>Cari aset yang dibutuhkan melalui katalog lengkap. Filter berdasarkan kategori, lokasi, dan ketersediaan.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Ajukan Peminjaman</h4>
+                        <p>Pilih tanggal pinjam dan kembali, lalu ajukan permohonan. Sistem akan otomatis memproses atau meneruskan ke admin.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Ambil dan Gunakan Aset</h4>
+                        <p>Setelah disetujui, ambil barang di lokasi yang ditentukan. Gunakan sesuai aturan peminjaman.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Kembalikan Tepat Waktu</h4>
+                        <p>Kembalikan aset dalam kondisi baik sesuai jadwal. Denda hanya berlaku setelah {{ .gracePeriod }}.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">FITUR UNGGULAN</span>
+                <h2 class="section-title">Kemudahan dalam Setiap Fitur</h2>
+                <p class="section-subtitle">
+                    Dirancang untuk pengalaman terbaik dalam peminjaman aset kampus
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h4 class="feature-title">Notifikasi Real-time</h4>
+                    <p class="feature-description">
+                        Dapatkan pemberitahuan langsung tentang status peminjaman, pengingat pengembalian, dan update penting lainnya.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h4 class="feature-title">Riwayat Lengkap</h4>
+                    <p class="feature-description">
+                        Akses semua riwayat peminjaman Anda dengan detail lengkap, termasuk status, durasi, dan catatan penting.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h4 class="feature-title">Sistem Denda Otomatis</h4>
+                    <p class="feature-description">
+                        Perhitungan denda yang transparan dengan grace period {{ .gracePeriod }}, tanpa kejutan yang tidak diinginkan.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 class="feature-title">Dashboard Interaktif</h4>
+                    <p class="feature-description">
+                        Pantau semua aktivitas peminjaman melalui dashboard yang mudah dipahami dengan visualisasi data yang jelas.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4 class="feature-title">Keamanan Data</h4>
+                    <p class="feature-description">
+                        Data Anda dilindungi dengan enkripsi modern dan sistem keamanan berlapis untuk privasi maksimal.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h4 class="feature-title">Dukungan 24/7</h4>
+                    <p class="feature-description">
+                        Tim support siap membantu Anda kapan saja melalui chat, email, atau telepon untuk solusi cepat.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-decoration">
+            <div class="cta-icon"><i class="fas fa-book"></i></div>
+            <div class="cta-icon"><i class="fas fa-flask"></i></div>
+            <div class="cta-icon"><i class="fas fa-video"></i></div>
+            <div class="cta-icon"><i class="fas fa-laptop"></i></div>
+            <div class="cta-particle"></div>
+            <div class="cta-particle"></div>
+            <div class="cta-particle"></div>
+            <div class="cta-particle"></div>
+        </div>
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Siap Memulai Peminjaman?</h2>
+                <p class="cta-description">
+                    Bergabunglah dengan ratusan pengguna lainnya dan rasakan kemudahan 
+                    dalam mengelola peminjaman aset kampus.
+                </p>
+                <a href="{{ .ctaRegister }}" class="btn btn-cta">
+                    <i class="fas fa-rocket me-2"></i> Daftar Sekarang - Gratis!
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-shapes"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0">Peminjaman Aset</h5>
+                        <small class="opacity-75">Sistem Peminjaman Aset Kampus</small>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <a href="#home" class="footer-link">Beranda</a>
+                    <a href="#process" class="footer-link">Cara Kerja</a>
+                    <a href="#features" class="footer-link">Fitur</a>
+                    <a href="{{ .ctaLogin }}" class="footer-link">Masuk</a>
+                    <a href="{{ .ctaRegister }}" class="footer-link">Daftar</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="mb-0">
+                    © 2025 Peminjaman Aset Kampus. Dibuat dengan <i class="fas fa-heart text-danger"></i> oleh <strong>Tim 3</strong>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add active class to nav links on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        // Floating cards carousel
+        (function() {
+            const cards = Array.from(document.querySelectorAll('.floating-card'));
+            if (!cards.length) return;
+            const dots = Array.from(document.querySelectorAll('.floating-dots .dot'));
+            const prevBtn = document.querySelector('.floating-nav [data-dir="prev"]');
+            const nextBtn = document.querySelector('.floating-nav [data-dir="next"]');
+            let current = 0;
+
+            const applyState = () => {
+                cards.forEach((card, idx) => {
+                    card.classList.remove('active', 'behind', 'hidden-card');
+                    if (idx === current) {
+                        card.classList.add('active');
+                    } else if (idx === (current + 1) % cards.length) {
+                        card.classList.add('behind');
+                    } else {
+                        card.classList.add('hidden-card');
+                    }
+                });
+
+                dots.forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === current);
+                });
+            };
+
+            const move = (dir) => {
+                current = dir === 'next'
+                    ? (current + 1) % cards.length
+                    : (current - 1 + cards.length) % cards.length;
+                applyState();
+            };
+
+            prevBtn?.addEventListener('click', () => move('prev'));
+            nextBtn?.addEventListener('click', () => move('next'));
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const idx = Number(dot.dataset.index || 0);
+                    current = idx;
+                    applyState();
+                });
+            });
+
+            applyState();
+        })();
+    </script>
+</body>
+
+</html>
+{{ end }}
