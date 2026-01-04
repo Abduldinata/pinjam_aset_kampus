@@ -17,5 +17,13 @@ cache/
 .DS_Store
 Thumbs.db
 
-# User folder (penting!)
-# C:/Users/  # Commented out to allow tracking files in this project
+# User uploaded files (local only - not tracked)
+uploads/
+public/
+
+# Go
+*.exe
+*.dll
+*.so
+*.dylib
+vendor/
