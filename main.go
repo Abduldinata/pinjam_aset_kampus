@@ -8,11 +8,10 @@ import (
 
 	"pinjam_aset_kampus/config"
 	"pinjam_aset_kampus/controllers"
-	"pinjam_aset_kampus/middleware" // <-- Penting: Import middleware
+	"pinjam_aset_kampus/middleware"
 	"pinjam_aset_kampus/models"
 
 	"github.com/gin-gonic/gin"
-	"golang.org/x/crypto/bcrypt"
 )
 
 func main() {
@@ -41,22 +40,20 @@ func main() {
 	})
 	tmpl := template.Must(template.ParseFiles(htmlFiles...))
 	r.SetHTMLTemplate(tmpl)
-	r.Static("/static", "./public")   // <-- BARU: Akses CSS/JS statis
-	r.Static("/css", "./static/css")  // <-- Static CSS files
-	r.Static("/js", "./static/js")    // <-- Static JS files
-	r.Static("/uploads", "./uploads") // <-- Akses foto bukti transfer
+	r.Static("/css", "./static/css")  // Static CSS files
+	r.Static("/js", "./static/js")    // Static JS files
+	r.Static("/uploads", "./uploads") // User uploaded files (payment proofs, etc)
 
 	// --- A. ROUTE PUBLIK (Tanpa Login) ---
 
 	// Landing page (public)
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(200, "landing.html", gin.H{
+			"ctaLogin":    "/login",
+			"ctaRegister": "/register",
 			"fine":        "Rp 20.000 per minggu mulai hari ke-4 keterlambatan",
 			"gracePeriod": "3 hari pertama bebas denda",
 			"blockNotice": "Pinjaman dikunci jika telat > 3 hari dengan status masih dipinjam",
-			"ctaLogin":    "/login",
-			"ctaRegister": "/register",
-			"howToAnchor": "#how-to",
 		})
 	})
 
@@ -68,19 +65,6 @@ func main() {
 	r.POST("/register", controllers.Register)
 
 	r.GET("/logout", controllers.Logout)
-
-	// [TESTING ONLY] Route buat admin & user cepat (Hapus kalau sudah production)
-	r.GET("/buat-akun-test", func(c *gin.Context) {
-		// Bikin Admin
-		hashAdmin, _ := bcrypt.GenerateFromPassword([]byte("admin123"), bcrypt.DefaultCost)
-		config.DB.Create(&models.User{Name: "Super Admin", Email: "super@admin.com", Password: string(hashAdmin), Role: "admin"})
-
-		// Bikin Mahasiswa
-		hashMhs, _ := bcrypt.GenerateFromPassword([]byte("mhs123"), bcrypt.DefaultCost)
-		config.DB.Create(&models.User{Name: "Budi Santoso", Email: "budi@mhs.ac.id", Password: string(hashMhs), Role: "user"})
-
-		c.String(200, "Akun Admin (super@admin.com / admin123) & User (budi@mhs.ac.id / mhs123) berhasil dibuat!")
-	})
 
 	// --- B. ROUTE ADMIN ---
 	admin := r.Group("/admin")

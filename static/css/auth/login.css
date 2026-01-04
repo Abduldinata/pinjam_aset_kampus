@@ -622,24 +622,25 @@
             text-align: center;
             margin-top: 2rem;
             color: #64748b;
-            font-size: 0.875rem;
+            font-size: 1rem;
+            font-weight: 600;
         }
 
-        .footer-text i {
-            color: #ef4444;
-            animation: heartbeat 1.5s ease-in-out infinite;
+        /* Override <small> default shrink to keep links readable */
+        .footer-text small {
+            font-size: 1rem;
+            font-weight: 600;
         }
 
-        @keyframes heartbeat {
+        .footer-text a {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #10b981;
+            text-decoration: none;
+        }
 
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
+        .footer-text a:hover {
+            color: #059669;
         }
 
         /* Responsive */
