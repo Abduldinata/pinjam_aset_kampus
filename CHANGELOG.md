@@ -2,6 +2,57 @@
 
 Riwayat pemeliharaan dan perubahan fitur utama pada aplikasi Pinjam Aset Kampus.
 
+## [1.4.0] - 2026-01-04
+### Added
+- **Landing Page**: Halaman pendaratan baru dengan hero section, carousel floating cards, proses workflow, dan fitur unggulan dengan desain modern.
+- **Interactive Carousel**: Floating cards carousel dengan navigasi prev/next dan dot indicators di landing page untuk menampilkan statistik pengguna.
+- **Background Decorations**: Sistem dekorasi background dengan animated blur shapes, floating icons, twinkling particles, dan geometric shapes dengan smooth animations.
+- **Green Theme**: Migrasi lengkap dari blue (#3b82f6) ke green (#10b981) untuk konsistensi visual di semua halaman.
+- **CSS External Files**: Ekstraksi semua inline CSS ke file eksternal di folder `static/css/` dengan struktur terorganisir per halaman.
+- **Static File Serving**: Setup routing `/css`, `/js`, dan `/uploads` di main.go untuk serving aset statis.
+- **Auth Toggle Links**: Penambahan link "Belum punya akun? Daftar di sini" di login dan "Sudah punya akun? Login di sini" di register untuk navigasi antar halaman.
+- **Auto-hash Password**: Implementasi bcrypt password hashing otomatis di endpoint register (tanpa perlu hash.go manual).
+- **Modal Z-index Fix**: Perbaikan modal bayar denda di history page dengan CSS z-index yang tepat agar modal muncul di atas backdrop.
+- **Git Ignore Update**: Penambahan `uploads/` dan `public/` ke .gitignore untuk mengecualikan file lokal dari tracking.
+
+### Changed
+- **Landing Page Data**: Statistik pengguna diubah dari unrealistic (500+, 1.2K+) ke realistic (120+, 350+, 24/7).
+- **Color Scheme**: Migrasi color theme dari blue ke green di seluruh aplikasi:
+  - Primary: #3b82f6 → #10b981 (emerald green)
+  - Primary Dark: #2563eb → #059669 (darker green)
+  - Background Gradients: Blue tones → green tones (#f0fdf4, #dcfce7, #bbf7d0)
+  - All shadows, borders, hover states → green rgba(16, 185, 129, x)
+- **Main.go**: Pembersihan code:
+  - Hapus route `/buat-akun-test` (testing route dengan hardcode password)
+  - Hapus import bcrypt (sudah di auth_controller.go)
+  - Hapus hardcode data landing page (hanya pass data yang diperlukan)
+  - Remove `/static` route duplikat, optimize static routes
+- **Hash.go**: File dihapus karena password hashing sekarang langsung di auth_controller.go pada register endpoint.
+- **Footer Text Styling**: Teks "Login di sini" dan "Daftar di sini" dibesarkan (0.875rem → 1rem) dan dimudahkan dibaca dengan font-weight 600.
+- **Link Colors**: Footer links sekarang menggunakan green theme dengan hover effect ke darker green.
+
+### Improved
+- **Code Organization**: CSS sekarang modular dan mudah dimaintain dengan struktur folder `static/css/{admin,auth,user}/`.
+- **CSS Performance**: Pengurangan ukuran HTML templates dengan memindahkan styling ke CSS eksternal.
+- **Responsive Design**: Landing page responsif untuk mobile, tablet, dan desktop dengan mobile-first approach.
+- **Animation Quality**: Carousel dan background animations smooth dengan timing yang tepat (20-35s duration dengan staggered delays).
+- **Accessibility**: Link dan buttons memiliki proper color contrast dan hover states untuk better UX.
+- **Decorative Elements**: Background decorations tidak mengganggu content readability dengan opacity dan positioning yang tepat.
+
+### Fixed
+- **Modal Backdrop Issue**: Modal payment di history page tidak lagi tersembunyi di balik backdrop dengan z-index fix di CSS.
+- **CSS Link Path**: Perbaikan path CSS dari `/static/css/` ke `/css/` untuk match dengan routing di main.go.
+- **Inline Style Conflict**: Hilangkan inline styles di HTML auth pages dan gunakan CSS classes untuk avoid specificity issues.
+- **Duplicate CSS Rules**: Hapus duplicate `.footer-text` rules yang menyebabkan styling conflict.
+- **Broken Keyframes**: Perbaikan fragmen CSS yang broken (stray `@keyframes` blocks) di auth CSS files.
+- **File Upload Button**: Styling diperbaiki untuk browser compatibility (Chrome, Firefox, Safari) dengan vendor prefixes.
+
+### Removed
+- **hash.go**: File yang sudah tidak digunakan (password hashing pindah ke auth_controller.go)
+- **Route /buat-akun-test**: Testing route dihapus untuk production readiness
+- **Hardcoded Landing Data**: Hapus data statis dari main.go route handler
+- **Inline CSS**: Semua CSS dari HTML tags sudah dipindah ke external files
+
 ## [1.3.0] - 2025-12-31
 ### Added
 - **Admin Welcome Banner**: Penambahan welcome banner animasi dengan gradient biru di dashboard admin, menampilkan greeting personal dan real-time clock dalam bahasa Indonesia.
