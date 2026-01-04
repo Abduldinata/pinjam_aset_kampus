@@ -1,6 +1,11 @@
 package main
 
 import (
+	"html/template"
+	"os"
+	"path/filepath"
+	"strings"
+
 	"pinjam_aset_kampus/config"
 	"pinjam_aset_kampus/controllers"
 	"pinjam_aset_kampus/middleware" // <-- Penting: Import middleware
@@ -20,24 +25,47 @@ func main() {
 	// 2. Init Router Gin
 	r := gin.Default()
 
-	// 3. Load semua file HTML dari folder views
-	r.LoadHTMLGlob("views/**/*")
+	// 3. Load semua file HTML dari folder views (rekursif)
+	var htmlFiles []string
+	filepath.Walk("views", func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if info.IsDir() {
+			return nil
+		}
+		if strings.HasSuffix(strings.ToLower(info.Name()), ".html") {
+			htmlFiles = append(htmlFiles, path)
+		}
+		return nil
+	})
+	tmpl := template.Must(template.ParseFiles(htmlFiles...))
+	r.SetHTMLTemplate(tmpl)
 	r.Static("/static", "./public")   // <-- BARU: Akses CSS/JS statis
+	r.Static("/css", "./static/css")  // <-- Static CSS files
+	r.Static("/js", "./static/js")    // <-- Static JS files
 	r.Static("/uploads", "./uploads") // <-- Akses foto bukti transfer
 
 	// --- A. ROUTE PUBLIK (Tanpa Login) ---
 
-	// Redirect root ke login
+	// Landing page (public)
 	r.GET("/", func(c *gin.Context) {
-		c.Redirect(302, "/login")
+		c.HTML(200, "landing.html", gin.H{
+			"fine":        "Rp 20.000 per minggu mulai hari ke-4 keterlambatan",
+			"gracePeriod": "3 hari pertama bebas denda",
+			"blockNotice": "Pinjaman dikunci jika telat > 3 hari dengan status masih dipinjam",
+			"ctaLogin":    "/login",
+			"ctaRegister": "/register",
+			"howToAnchor": "#how-to",
+		})
 	})
 
 	// Halaman Auth
 	r.GET("/login", controllers.ShowLoginPage)
 	r.POST("/login", controllers.Login)
 
-	// r.GET("/register", controllers.ShowRegisterPage)
-	// r.POST("/register", controllers.Register)
+	r.GET("/register", controllers.ShowRegisterPage)
+	r.POST("/register", controllers.Register)
 
 	r.GET("/logout", controllers.Logout)
 
